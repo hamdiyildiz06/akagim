@@ -25,6 +25,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 //$config['base_url'] = 'http://localhost/codeigniter/son/panel/';
 $config['base_url'] = 'http://akagim/';
+//$config['base_url'] = 'https://ajanspenna.com.tr/demo/akagim/panel/';
 
 /*
 |--------------------------------------------------------------------------

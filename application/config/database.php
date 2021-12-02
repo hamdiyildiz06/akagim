@@ -76,9 +76,18 @@ $query_builder = TRUE;
 $db['default'] = array(
 	'dsn'	=> '',
 	'hostname' => 'localhost',
+
+//    'username' => 'trajansp_userakagim',
+//    'password' => 'userAkagim!1',
+//    'database' => 'trajansp_akagim',
+
+
+
 	'username' => 'root',
 	'password' => '',
 	'database' => 'akagim',
+
+
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
