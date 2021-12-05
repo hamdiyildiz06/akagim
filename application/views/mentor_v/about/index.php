@@ -53,12 +53,30 @@
                 <div class="media-body text-center p-t-lg">
                     <small class="media-meta">Sosyal İconlar</small>
                     <div class="contact-links m-t-sm">
+                        <?php if ($item->phone): ?>
                         <a href="javascript:void(0)" class="icon icon-circle icon-sm m-b-0" data-toggle="tooltip" title="Phone" data-placement="top"><i class="fa fa-phone"></i></a>
+                        <?php endif; ?>
+
+                        <?php if ($item->mobile): ?>
                         <a href="javascript:void(0)" class="icon icon-circle icon-sm m-b-0" data-toggle="tooltip" title="Mobile" data-placement="top"><i class="fa fa-mobile"></i></a>
-                        <a href="mailto:example@rathemes.com" class="icon icon-circle icon-sm m-b-0" data-toggle="tooltip" title="example@rathemes.com" data-placement="top"><i class="fa fa-envelope-o"></i></a>
-                        <a href="javascript:void(0)" class="icon icon-circle icon-sm m-b-0" data-toggle="tooltip" title="rathemes" data-placement="top"><i class="fa fa-skype"></i></a>
-                        <a href="https://facebook.com/rathemes" class="icon icon-circle icon-sm m-b-0" data-toggle="tooltip" title="Facebook" data-placement="top"><i class="fa fa-facebook"></i></a>
-                        <a href="https://twitter.com/rathemes" class="icon icon-circle icon-sm m-b-0" data-toggle="tooltip" title="Twitter" data-placement="top"><i class="fa fa-twitter"></i></a>
+                        <?php endif; ?>
+
+                        <?php if ($item->email): ?>
+                        <a href="mailto:<?= $item->email ?>" class="icon icon-circle icon-sm m-b-0" data-toggle="tooltip" title="<?= $item->email ?>" data-placement="top"><i class="fa fa-envelope-o"></i></a>
+                        <?php endif; ?>
+
+                        <?php if ($item->linkedin): ?>
+                        <a href="<?= $item->linkedin ?>" class="icon icon-circle icon-sm m-b-0" data-toggle="tooltip" title="rathemes" data-placement="top"><i class="fa fa-linkedin"></i></a>
+                        <?php endif; ?>
+
+                        <?php if ($item->facebook): ?>
+                        <a href="<?= $item->facebook ?>" class="icon icon-circle icon-sm m-b-0" data-toggle="tooltip" title="Facebook" data-placement="top"><i class="fa fa-facebook"></i></a>
+                        <?php endif; ?>
+
+                        <?php if ($item->twitter): ?>
+                        <a href="<?= $item->twitter ?>" class="icon icon-circle icon-sm m-b-0" data-toggle="tooltip" title="Twitter" data-placement="top"><i class="fa fa-twitter"></i></a>
+                        <?php endif; ?>
+
                     </div>
                 </div>
             </div><!-- .profile-cover -->
