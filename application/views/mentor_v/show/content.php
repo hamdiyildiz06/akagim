@@ -28,36 +28,22 @@
                                         <tr>
                                             <td>
                                                 <?php foreach ($items as $item): ?>
-                                                    <!-- a single mail -->
-                                                    <div class="mail-item">
-                                                        <table class="mail-container">
-                                                            <tr>
-                                                                <td class="mail-left">
-                                                                    <div class="avatar avatar-lg avatar-circle ">
-                                                                        <a href="<?php echo base_url("mentor/courses/{$item->id}"); ?>">
-                                                                            <img src="<?= get_picture( "users_v", $item->img_url, '80x80'); ?>"  alt="sender photo">
-                                                                        </a>
-                                                                    </div>
-                                                                </td>
-                                                                <td class="mail-center">
-                                                                    <div class="mail-item-header">
-                                                                        <h4 class="mail-item-title"><a href="<?php echo base_url("mentor/courses/{$item->id}"); ?>" class="title-color"><?= $item->full_name; ?></a></h4>
-                                                                        <a href="#"><span class="label label-success">client</span></a>
-                                                                        <a href="#"><span class="label label-primary">work</span></a>
-                                                                    </div>
-                                                                    <p class="mail-item-excerpt">Welcome To your dashboard. here you can manage and coordinate any activities</p>
-                                                                </td>
-                                                                <td class="mail-right">
-                                                                    <p class="mail-item-date">2 hours ago</p>
-                                                                    <p class="mail-item-star starred">
-                                                                        <a href="#"><i class="zmdi zmdi-star"></i></a>
-                                                                    </p>
-                                                                </td>
-                                                            </tr>
-                                                        </table>
-                                                    </div><!-- END mail-item -->
+                                                    <div class="col-md-4 col-sm-6">
+                                                        <div class="thumbnail white">
+                                                            <img style="width: 50%" src="<?= get_picture( "users_v", $item->img_url, '80x80'); ?>"  alt="sender photo">
+                                                            <div class="caption text-center">
+                                                                <h4><strong><?= $item->full_name; ?></strong></h4>
+                                                                <p><?= $item->unvan; ?></p>
+                                                                <p>
+                                                                    <a href="<?php echo base_url("mentor/courses/{$item->id}"); ?>" class="btn btn-primary" role="button">Toplantılar</a>
+                                                                    <a href="<?php echo base_url("mentor/about/{$item->id}"); ?>" class="btn btn-default" role="button">Profil</a>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div><!-- END column -->
                                                 <?php endforeach;?>
                                             </td>
+
                                         </tr>
                                     </table>
                                 </div>

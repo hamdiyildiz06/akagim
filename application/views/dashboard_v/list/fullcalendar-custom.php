@@ -48,6 +48,8 @@
                 $('#listTitle').val("");
                 $('#listColor').val("#3a87ad");
                 $('#listTextColor').val("");
+                $('#toplantiTuru').val("zoom");
+                $('#toplantiYeri').val("");
                 $('#listStart').val(date.format());
                 $('.hamdi').val("11:00");
                 $('#listDescription').val("");
@@ -59,6 +61,11 @@
                 $('#listInsert').attr("style","display:true");
                 $('#listUpdate').attr("style","display:none");
                 $('#listDelete').attr("style","display:none");
+                if ($('#toplantiTuru').val() == 'ozel'){
+                    $('.location').attr("style","display:true");
+                }else{
+                    $('.location').attr("style","display:none");
+                }
 
                 $('#insert').val(date.format());
                 $("#insert").modal();
@@ -74,6 +81,8 @@
                 $('#listColor').val(calEvent.color);
                 $('#listTextColor').val(calEvent.textColor);
                 $('#listDescription').val(calEvent.description);
+                $('#toplantiTuru').val(calEvent.toplantiTuru);
+                $('#toplantiYeri').val(calEvent.toplantiYeri);
                 // $('#listStart').val($.fullCalendar.formatDate(calEvent.start, "DD-MM-Y"));
                 $('#listStart').val(calEvent.start.format("YYYY-MM-DD"));
                 $('#listEnd').val(calEvent.end);
@@ -81,13 +90,15 @@
                 $('#listStart_time').val(calEvent.start_time);
                 $('#listEnd_time').val(calEvent.end_time);
 
-
                 // button controls
                 $('#listInsert').attr("style","display:none");
                 $('#listUpdate').attr("style","display:true");
                 $('#listDelete').attr("style","display:true");
-
-
+                if ($('#toplantiTuru').val() == 'ozel'){
+                    $('.location').attr("style","display:true");
+                }else{
+                    $('.location').attr("style","display:none");
+                }
 
                 // alert(calEvent.start.format());
                 $("#insert").modal();
@@ -100,12 +111,14 @@
                 var color = calEvent.color;
                 var textColor = calEvent.textColor;
                 var description = calEvent.description;
+                var toplantiTuru = calEvent.toplantiTuru;
+                var toplantiYeri = calEvent.toplantiYeri;
                 var start = $.fullCalendar.formatDate(calEvent.start, "YYYY-MM-DD HH:mm:ss");
                 var end = $.fullCalendar.formatDate(calEvent.end, "YYYY-MM-DD HH:mm:ss");
                 $.ajax({
                     url:"<?php echo base_url(); ?>dashboard/update",
                     type:"POST",
-                    data:{title:title, color:color, textColor:textColor, description:description, start:start, end:end, id:id},
+                    data:{title:title, color:color, textColor:textColor, description:description, toplantiTuru:toplantiTuru, toplantiYeri:toplantiYeri, start:start, end:end, id:id},
                     success:function()
                     {
                         alert("dropdown işlemi yapıldı");
@@ -122,12 +135,14 @@
                 var color = calEvent.color;
                 var textColor = calEvent.textColor;
                 var description = calEvent.description;
+                var toplantiTuru = calEvent.toplantiTuru;
+                var toplantiYeri = calEvent.toplantiYeri;
                 var start = $.fullCalendar.formatDate(calEvent.start, "YYYY-MM-DD HH:mm:ss");
                 var end = $.fullCalendar.formatDate(calEvent.end, "YYYY-MM-DD HH:mm:ss");
                 $.ajax({
                     url:"<?php echo base_url(); ?>dashboard/ResizeUpdate",
                     type:"POST",
-                    data:{title:title, color:color, textColor:textColor, description:description, start:start, end:end, id:id},
+                    data:{title:title, color:color, textColor:textColor, description:description, toplantiTuru:toplantiTuru, toplantiYeri:toplantiYeri, start:start, end:end, id:id},
                     success:function(cevap)
                     {
                         alert(cevap + " resize işlemi yapıldı");

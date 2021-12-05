@@ -541,4 +541,38 @@ class Mentor extends HY_Controller
         $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
     }
 
+    public function about($id){
+
+        $viewData = new stdClass();
+
+        $this->load->model("course_model");
+
+        /** Tablodan Verilerin Getirilmesi.. */
+        $item = $this->user_model->get(
+            array(
+                "id"    => $id,
+            )
+        );
+
+        $viewData->courses = $this->course_model->get_all(
+            array(), "rank ASC"
+        );
+
+
+        $viewData->user_roles = $this->user_role_model->get_all(
+            array(
+                "isActive" => 1
+            )
+        );
+
+        /** View'e gönderilecek Değişkenlerin Set Edilmesi.. */
+        $viewData->viewFolder = $this->viewFolder;
+        $viewData->subViewFolder = "about";
+        $viewData->item = $item;
+
+        $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
+
+
+    }
+
 }

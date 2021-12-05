@@ -142,6 +142,21 @@
                         <input name="end_time"  type="text" id="listStart" class="form-control"  placeholder="Tarih" >
                     </div>
 
+                    <div class="form-group tyeri">
+                        <label for="control-demo-6">Toplantı Türü</label>
+                        <div id="control-demo-6">
+                            <select name="toplanti_turu" id="toplantiTuru" class="form-control toplanti">
+                                <option value="zoom">Zoom</option>
+                                <option value="ozel">Özel</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group location" style="display: none">
+                        <label for="end_time">Toplantı Yeri</label>
+                        <input name="toplanti_yeri" id="toplantiYeri" type="text" id="listStart" class="form-control"  placeholder="Toplantı Yeri" >
+                    </div>
+
                     <div class="form-group">
                         <label for="description">Açıklama</label>
                         <textarea name="description" class="form-control" id="listDescription" placeholder="Açıklama"  cols="30" rows="4"></textarea>
@@ -165,6 +180,23 @@
 
 <script>
     $(document).ready(function(){
+
+        if ($('.toplanti').val() == "zoom"){
+            $('.location').css("display","none");
+        }
+
+        $('.toplanti').on('change', function() {
+
+            if (this.value == 'ozel'){
+                // alert(this.value);
+                $('.location').css("display","block");
+            }else{
+                // alert(this.value);
+                $('.location').css("display","none");
+            }
+        });
+
+
         var yeniEtkinlik;
 
         $('#listInsert').click(function (){
@@ -186,6 +218,8 @@
                 title:$('#listTitle').val(),
                 color:$('#listColor').val(),
                 textColor:$('#listTextColor').val(),
+                toplantiTuru:$('#toplantiTuru').val(),
+                toplantiYeri:$('#toplantiYeri').val(),
                 start:$('#listStart').val() + " " + $('#listStart_time').val(),
                 end:$('#listStart').val() + " " + $('#listEnd_time').val(),
                 start_time:$('#listStart_time').val(),

@@ -48,7 +48,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label>Uzmanlık Alanlarınız</label>
+                        <label>Uzmanlık Alanlarınız ( <small style="color: red">Uzmanlık Alanlarınızı ( , )'ile ayırarak giriniz</small> )</label>
                         <input class="form-control" type="text" placeholder="Uzmanlık Alanlarınızı ( , )'ile ayırarak giriniz" name="profession" value="<?php echo isset($form_error) ? set_value("profession") : $item->profession; ?>">
                         <?php if(isset($form_error)){ ?>
                             <small class="pull-right input-form-error"> <?php echo form_error("profession"); ?></small>
@@ -73,7 +73,7 @@
 
                     <div class="form-group">
                         <label>Hakkımda</label>
-                        <textarea name="description" class="m-0" data-plugin="summernote" data-options="{height: 250}"></textarea>
+                        <textarea name="description" class="m-0" data-plugin="summernote" data-options="{height: 250}"><?php echo $item->description; ?></textarea>
                     </div>
 
                     <hr>

@@ -81,8 +81,6 @@ $db['default'] = array(
 //    'password' => 'userAkagim!1',
 //    'database' => 'trajansp_akagim',
 
-
-
 	'username' => 'root',
 	'password' => '',
 	'database' => 'akagim',

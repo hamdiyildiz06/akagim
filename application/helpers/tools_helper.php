@@ -281,3 +281,10 @@ function get_watch_list($baslangic , $bitis){
 
     return $calendar;
 }
+
+function get_profession($profession){
+
+    $uzmanlik = explode(',', $profession);
+
+    return $uzmanlik;
+}
