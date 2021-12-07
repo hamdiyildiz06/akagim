@@ -272,11 +272,19 @@ function get_watch_list($baslangic , $bitis){
     $baslangic = explode(' ', $baslangic);
     $bitis = explode(' ', $bitis);
 
+    // Tarih yazım karakteri dünelemeiri = 17-10-2021
+    $baslangict = explode('-',$baslangic[0]);
+
+    // Başlangıç Saat yazım karakteri dünelemeiri = 11:00
+    $baslangics = explode(':',$baslangic[1]);
+
+    // Bitiş Saat yazım karakteri dünelemeiri = 11:00
+    $bitiss = explode(':',$bitis[1]);
 
     $calendar = [
-        "tarih" => $baslangic[0],
-        "baslangi" => $baslangic[1],
-        "bitis" => $bitis[1]
+        "tarih" => $baslangict[2] .'-'. $baslangict[1] .'-'. $baslangict[0],
+        "baslangi" => $baslangics[0] .':'.$baslangics[1],
+        "bitis" => $bitiss[0] .':'.$bitiss[1]
     ];
 
     return $calendar;

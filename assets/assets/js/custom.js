@@ -24,6 +24,28 @@ $(document).ready(function () {
 
     })
 
+    $(".content-container, .image_list_container").on('click', '.remove-btn', function () {
+
+        var $data_url = $(this).data("url");
+
+        swal({
+            title: 'Emin misiniz?',
+            text: "Bu işlemi geri alamayacaksınız!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Evet, Sil!',
+            cancelButtonText : "Hayır"
+        }).then(function (result) {
+            if (result.value) {
+
+                window.location.href = $data_url;
+            }
+        });
+
+    })
+
     $(".content-container, .image_list_container").on('change', '.isActive', function(){
 
         var $data = $(this).prop("checked");

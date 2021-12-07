@@ -9,16 +9,6 @@ class Fullcalendar_model extends CI_Model
         return $this->db->get('calendar');
     }
 
-    public function get($where = array())
-    {
-        return $this->db->where($where)->get("calendar")->row();
-    }
-
-    public function get_all($where = array(), $order = "id ASC")
-    {
-        return $this->db->where($where)->order_by($order)->get('calendar')->result();
-    }
-
     public function fetch_all_event($where = array(), $order = "id ASC")
     {
         return $this->db->where($where)->order_by($order)->get('calendar');
@@ -50,5 +40,41 @@ class Fullcalendar_model extends CI_Model
     {
         $this->db->where('id', $id);
         $this->db->update('calendar', $data);
+    }
+
+
+    public function get($where = array())
+    {
+        return $this->db->where($where)->get("calendar")->row();
+    }
+
+    public function get_all($where = array(), $order = "id ASC")
+    {
+        return $this->db->where($where)->order_by($order)->get('calendar')->result();
+    }
+
+
+    public function add($data = array())
+    {
+//        if (isAllowedWriteModule())
+            return $this->db->insert("calendar", $data);
+//        else
+//            return false;
+    }
+
+    public function update($where = array(), $data = array())
+    {
+//        if (isAllowedUpdateModule())
+            return $this->db->where($where)->update("calendar", $data);
+//        else
+//            return false;
+    }
+
+    public function delete($where = array())
+    {
+//        if (isAllowedDeleteModule())
+            return $this->db->where($where)->delete("calendar");
+//        else
+//            return false;
     }
 }

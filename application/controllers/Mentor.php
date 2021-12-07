@@ -555,9 +555,9 @@ class Mentor extends HY_Controller
             )
         );
 
-        $viewData->courses = $this->course_model->get_all(
-            array(), "rank ASC"
-        );
+//        $viewData->courses = $this->course_model->get_all(
+//            array(), "rank ASC"
+//        );
 
 
         $viewData->user_roles = $this->user_role_model->get_all(
@@ -591,13 +591,13 @@ class Mentor extends HY_Controller
             )
         );
 
-        $viewData->past_meetings = $this->fullcalendar_model->get_all(
-            array(
-                "teacher_id" => $id,
-                "student_id !=" => 0,
-                "status" => '3'
-            )
-        );
+//        $viewData->past_meetings = $this->fullcalendar_model->get_all(
+//            array(
+//                "teacher_id" => $id,
+//                "student_id !=" => 0,
+//                "status" => '3'
+//            )
+//        );
 
         $viewData->cancelled = $this->fullcalendar_model->get_all(
             array(
@@ -620,6 +620,228 @@ class Mentor extends HY_Controller
         $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
 
 
+    }
+
+    public function event($id){
+
+        $viewData = new stdClass();
+
+        $this->load->model("course_model");
+        $this->load->model('fullcalendar_model');
+
+        /** Tablodan Verilerin Getirilmesi.. */
+//        $viewData->courses = $this->course_model->get_all(
+//            array(), "rank ASC"
+//        );
+
+        $viewData->user_roles = $this->user_role_model->get_all(
+            array(
+                "isActive" => 1
+            )
+        );
+
+        $viewData->event = $this->fullcalendar_model->get(
+            array(
+                "id" => $id
+            )
+        );
+
+
+
+        if ($viewData->event->status == 1){
+            $viewData->mentor = $this->user_model->get(
+                array(
+                    "id"    => $viewData->event->teacher_id,
+                )
+            );
+
+            $viewData->menti = $this->user_model->get(
+                array(
+                    "id"    => get_active_user()->id
+                )
+            );
+
+            $viewData->item= $this->fullcalendar_model->get(
+                array(
+                    "id" => $viewData->event->teacher_id,
+                    "student_id" => 0,
+                )
+            );
+        }
+
+        if ($viewData->event->status == 2){
+
+            $viewData->mentor = $this->user_model->get(
+                array(
+                    "id"    => $viewData->event->teacher_id,
+                )
+            );
+
+            $viewData->menti = $this->user_model->get(
+                array(
+                    "id"    => $viewData->event->student_id
+                )
+            );
+
+            $viewData->item= $this->fullcalendar_model->get(
+                array(
+                    "id" => $viewData->event->teacher_id,
+                    "student_id" => 0,
+                )
+            );
+        }
+
+        if ($viewData->event->status == 3){
+
+            $viewData->mentor = $this->user_model->get(
+                array(
+                    "id"    => $viewData->event->teacher_id,
+                )
+            );
+
+            $viewData->menti = $this->user_model->get(
+                array(
+                    "id"    => $viewData->event->student_id
+                )
+            );
+
+            $viewData->item= $this->fullcalendar_model->get(
+                array(
+                    "id" => $viewData->event->teacher_id,
+                    "student_id" => 0,
+                )
+            );
+        }
+
+        if ($viewData->event->status == 4){
+
+            $viewData->mentor = $this->user_model->get(
+                array(
+                    "id"    => $viewData->event->teacher_id,
+                )
+            );
+
+            $viewData->menti = $this->user_model->get(
+                array(
+                    "id"    => $viewData->event->student_id
+                )
+            );
+
+            $viewData->item= $this->fullcalendar_model->get(
+                array(
+                    "id" => $viewData->event->teacher_id,
+                    "student_id" => 0,
+                )
+            );
+        }
+
+
+        /** View'e gönderilecek Değişkenlerin Set Edilmesi.. */
+        $viewData->viewFolder = $this->viewFolder;
+        $viewData->subViewFolder = "event";
+
+
+        $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
+
+
+    }
+
+    public function rezerv($id,$di = ""){
+        $viewData = new stdClass();
+        $user = get_active_user();
+
+        $this->load->model('fullcalendar_model');
+
+        $rezerv = $this->fullcalendar_model->get(
+            array(
+                "id" => $id,
+            )
+        );
+
+
+        if ($rezerv->status === '1'){
+            // menti iptal edemeyecek
+            $isActive = ($rezerv->isActive === '0' ) ? '1' : '0';
+            if (($user->user_role_id == 3) && $isActive === 1){
+                $alert = array(
+                    "title" => "İşlem Başarısız",
+                    "text"  => "Bu işlem için yetkiniz yok",
+                    "type"  => "error"
+                );
+
+                $this->session->set_flashdata("alert", $alert);
+                redirect(base_url("mentor/event/{$id}"));
+                die();
+            }
+
+            $data = array(
+                "student_id" => $user->id,
+                "status"  => '2',
+                "isActive"  => $isActive
+            );
+
+        }elseif ($rezerv->status === '2'){
+
+            $isActive = $di;
+            // menti iptal edemeyecek
+            if (($user->user_role_id == 1) && $isActive === 1){
+                $alert = array(
+                    "title" => "İşlem Başarısız",
+                    "text"  => "Bu işlem için yetkiniz yok",
+                    "type"  => "error"
+                );
+
+                $this->session->set_flashdata("alert", $alert);
+                redirect(base_url("mentor/event/{$id}"));
+                die();
+            }
+
+            if ($di == 2){
+                $data =   array(
+                    "status"  => '2',
+                    "isActive"  => '2'
+                );
+            }elseif($di == 3){
+                $data =   array(
+                    "status"  => '3',
+                    "isActive"  => '3'
+                );
+            }elseif ($di == 4){
+                $data =   array(
+                    "status"  => '4',
+                    "isActive"  => '4'
+                );
+            }
+
+        }
+
+        $update = $this->fullcalendar_model->update(array("id" => $id), $data);
+
+
+        if($update){
+
+            $alert = array(
+                "title" => "İşlem Başarılı",
+                "text"  => "Kayıt başarılı bir şekilde eklendi",
+                "type"  => "success"
+            );
+
+        } else {
+
+            $alert = array(
+                "title" => "İşlem Başarısız",
+                "text"  => "Kayıt Ekleme sırasında bir problem oluştu",
+                "type"  => "error"
+            );
+        }
+
+
+        $this->session->set_flashdata("alert", $alert);
+
+//        redirect(base_url("mentor/about/{$rezerv->teacher_id}#profile-my_meetings"));
+        redirect(base_url("mentor/event/{$id}"));
+
+        die();
     }
 
 }
