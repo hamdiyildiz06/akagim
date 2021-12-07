@@ -14,6 +14,11 @@ class Fullcalendar_model extends CI_Model
         return $this->db->where($where)->get("calendar")->row();
     }
 
+    public function get_all($where = array(), $order = "id ASC")
+    {
+        return $this->db->where($where)->order_by($order)->get('calendar')->result();
+    }
+
     public function fetch_all_event($where = array(), $order = "id ASC")
     {
         return $this->db->where($where)->order_by($order)->get('calendar');

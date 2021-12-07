@@ -138,7 +138,7 @@ function get_settings(){
         if(!$settings) {
 
             $settings = new stdClass();
-            $settings->company_name = "kablosuzkedi";
+            $settings->company_name = "YildizTurk";
             $settings->logo         = "default";
 
         }
@@ -287,4 +287,28 @@ function get_profession($profession){
     $uzmanlik = explode(',', $profession);
 
     return $uzmanlik;
+}
+
+function get_user_info($id, $topic = false){
+    $t = &get_instance();
+
+    $t->load->model("user_model");
+
+    $user = $t->user_model->get(
+        array(
+            "id"    => $id
+        )
+    );
+
+    if ($topic){
+        if ($user->topic_name != "")
+            return  $user->topic_name;
+        else
+            return $user->topic;
+    }
+
+    if($user)
+        return $user ;
+    else
+        return false;
 }

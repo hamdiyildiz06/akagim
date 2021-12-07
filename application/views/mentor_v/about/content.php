@@ -19,7 +19,7 @@
                             <div class="col-md-12">
                                 <?php if(empty($item->description)) { ?>
 
-                                    <div class="alert alert-info text-center col-md-11"  style="margin-top: 30px">
+                                    <div class="alert alert-info text-center col-md-7"  style="margin-top: 30px">
                                         <p> Burada herhangi bir Bilgilendirme bulunmamaktadır. </p>
                                     </div>
 
@@ -37,38 +37,12 @@
 
                 <div role="tabpanel" id="profile-my_available_meetings" class="tab-pane fade p-md">
                     <div class="row">
-                        <div class="col-md-6 col-sm-6">
-                            <div class="user-card p-0">
-                                <div class="media white">
-                                    <div class="media-left">
-                                        <div class="avatar avatar-lg avatar-circle" style="padding: 5px;">
-                                            <a href="javascript:void(0)"><img src="<?= get_picture( "users_v", $item->img_url, '80x80'); ?>" alt=""></a>
-                                            <i class="status status-online"></i>
-                                        </div>
-                                    </div>
-                                    <div class="media-body">
-                                        <h5 class="media-heading"><a href="javascript:void(0)" class="title-color"> <?= $item->full_name; ?> </a></h5>
-                                        <small class="media-meta"> <?= $item->profession ?> </small>
-                                    </div>
-                                </div>
-                                <div class="media">
-                                    <div class="media-left text-center" style="float: left; padding: 0 0 20px 20px">
-                                        <h5 class="media-heading"><a href="javascript:void(0)" class="title-color">10.12.2021</a></h5>
-                                        <p> 13:30 - 14:30 </p>
-                                        <small class="media-meta"> Zoom</small>
-                                    </div>
 
-                                    <div class="media-right text-center" style="float: right; padding: 20px 20px 20px 0">
-                                        <a href="javascript:void(0);" type="button" class="btn rounded mw-md btn-warning">RANDEVU AL</a>
-                                    </div>
-                                </div>
-                            </div><!-- search-result -->
-                        </div><!-- END column -->
-                    </div><!-- .row -->
-                </div><!-- .tab-pane -->
 
-                <div role="tabpanel" id="profile-my_meetings" class="tab-pane fade p-md">
-                    <div class="row">
+                        <?php
+                        foreach ($available_meetings as $available):
+                        $calendar = get_watch_list($available->start_event,$available->end_event);
+                        ?>
                         <div class="col-md-12 col-sm-12">
                             <div class="user-card p-0">
                                 <div class="media white">
@@ -84,13 +58,62 @@
                                     </div>
                                 </div>
                                 <div class="media">
+                                    <div class="media-left text-center" style="float: left; padding: 0 0 20px 20px">
+                                        <h5 class="media-heading"><a href="javascript:void(0)" class="title-color"><?=  $calendar['tarih']; ?></a></h5>
+                                        <p> <?=  $calendar['baslangi'];  ?> - <?=  $calendar['bitis'];  ?> </p>
+                                        <small class="media-meta"> <?= $available->toplantiTuru; ?> </small>
+                                    </div>
+
+                                    <div class="media-right text-center" style="float: right; padding: 20px 20px 20px 0">
+                                         <a  href="javascript:void(0);" type="button" class="btn rounded mw-md btn-warning">RANDEVU AL</a>
+                                    </div>
+                                </div>
+                            </div><!-- search-result -->
+                        </div><!-- END column -->
+                        <?php  endforeach; ?>
+                    </div><!-- .row -->
+                </div><!-- .tab-pane -->
+
+                <div role="tabpanel" id="profile-my_meetings" class="tab-pane fade p-md">
+                    <div class="row">
+
+                        <?php
+
+                        foreach ($my_meetings as $available):
+                        $calendar = get_watch_list($available->start_event,$available->end_event);
+                        ?>
+                        <div class="col-md-12 col-sm-12">
+                            <div class="user-card p-0">
+                                <div class="media white">
+
+                                    <div class="media-left">
+                                        <div class="avatar avatar-lg avatar-circle" style="padding: 5px;">
+                                            <a href="javascript:void(0)"><img src="<?= get_picture( "users_v", get_user_info($available->student_id)->img_url, '80x80'); ?>" alt=""></a>
+                                            <i class="status status-online"></i>
+                                        </div>
+                                    </div>
+                                    <div class="media-body">
+                                        <h5 class="media-heading"><a href="javascript:void(0)" class="title-color"> <?= get_user_info($available->student_id)->full_name; ?> </a></h5>
+                                        <small class="media-meta"> <?= get_user_info($available->student_id, true); ?> </small>
+                                    </div>
+                                    <?php if ($available->isActive == '1'): ?>
+                                        <div class="media-right text-center" style="padding: 20px 20px 20px 0">
+                                            <a href="javascript:void(0);" type="button" class="btn rounded mw-md btn-danger">rezerv</a>
+                                        </div>
+                                    <?php endif; ?>
+                                </div>
+                                <div class="media">
                                     <div class="media-left text-center col-md-6" style="float: left; padding: 0 0 20px 20px">
-                                        <h5 class="media-heading"><a href="javascript:void(0)" class="title-color">10.12.2021</a></h5>
-                                        <p> 13:30 - 14:30 </p>
-                                        <small class="media-meta"> Zoom</small>
+                                        <h5 class="media-heading"><a href="javascript:void(0)" class="title-color"><?=  $calendar['tarih']; ?></a></h5>
+                                        <p> <?=  $calendar['baslangi']; ?> - <?=  $calendar['bitis']; ?> </p>
+                                        <small class="media-meta"> <?=  $available->toplantiTuru; ?> </small>
                                         <div class="media-body text-center" style="padding-top: 10px">
                                             <div class="text-center">
+                                                <?php if ($available->isActive == '1'): ?>
+                                                <a href="javascript:void(0);" type="button" class="btn rounded btn-success"> REZERV EDİLDİ</a>
+                                                <?php else: ?>
                                                 <a href="javascript:void(0);" type="button" class="btn rounded btn-warning"> TOPLANTI SAYFASI</a>
+                                                <?php endif; ?>
                                             </div>
                                         </div>
                                     </div>
@@ -110,110 +133,193 @@
                                         <div class="col-md-12">
                                             <div class="media-left">
                                                 <div class="avatar avatar-lg avatar-circle" style="padding: 5px;">
-                                                    <a href="javascript:void(0)"><img src="<?= get_picture( "users_v", $item->img_url, '80x80'); ?>" alt=""></a>
+                                                    <a href="javascript:void(0)"><img src="<?= get_picture( "users_v", get_user_info($available->student_id)->img_url, '80x80'); ?>" alt=""></a>
                                                     <i class="status status-online"></i>
                                                 </div>
                                             </div>
                                             <div class="media-body">
-                                                <h5 class="media-heading"><a href="javascript:void(0)" class="title-color"> <?= $item->full_name; ?> </a></h5>
-                                                <small class="media-meta"> <?= $item->profession ?> </small>
+                                                <h5 class="media-heading"><a href="javascript:void(0)" class="title-color"> <?= get_user_info($available->student_id)->full_name; ?> </a></h5>
+                                                <small class="media-meta"> <?= get_user_info($available->student_id, true); ?> </small>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div><!-- search-result -->
                         </div><!-- END column -->
+                        <?php endforeach; ?>
                     </div><!-- .row -->
                 </div><!-- .tab-pane -->
 
                 <div role="tabpanel" id="profile-my_past_meetings" class="tab-pane fade p-md" >
                     <div class="row">
-                        <div class="col-md-12 col-sm-12">
-                            <div class="user-card p-0">
-                                <div class="media white">
-                                    <div class="media-left">
-                                        <div class="avatar avatar-lg avatar-circle" style="padding: 5px;">
-                                            <a href="javascript:void(0)"><img src="<?= get_picture( "users_v", $item->img_url, '80x80'); ?>" alt=""></a>
-                                            <i class="status status-online"></i>
-                                        </div>
-                                    </div>
-                                    <div class="media-body">
-                                        <h5 class="media-heading"><a href="javascript:void(0)" class="title-color"> <?= $item->full_name; ?> </a></h5>
-                                        <small class="media-meta"> <?= $item->profession ?> </small>
-                                    </div>
-                                </div>
-                                <div class="media">
-                                    <div class="media-left text-center col-md-6" style="float: left; padding: 0 0 20px 20px">
-                                        <h5 class="media-heading"><a href="javascript:void(0)" class="title-color">10.12.2021</a></h5>
-                                        <p> 13:30 - 14:30 </p>
-                                        <small class="media-meta"> Zoom</small>
-                                        <div class="media-body text-center" style="padding-top: 10px">
-                                            <div class="text-center">
-                                                <a href="javascript:void(0);" type="button" class="btn rounded btn-warning"> TOPLANTI SAYFASI</a>
+
+                        <?php
+                        foreach ($past_meetings as $available):
+                        $calendar = get_watch_list($available->start_event,$available->end_event);
+                        ?>
+                            <div class="col-md-12 col-sm-12">
+                                <div class="user-card p-0">
+                                    <div class="media white">
+
+                                        <div class="media-left">
+                                            <div class="avatar avatar-lg avatar-circle" style="padding: 5px;">
+                                                <a href="javascript:void(0)"><img src="<?= get_picture( "users_v", get_user_info($available->student_id)->img_url, '80x80'); ?>" alt=""></a>
+                                                <i class="status status-online"></i>
                                             </div>
                                         </div>
+                                        <div class="media-body">
+                                            <h5 class="media-heading"><a href="javascript:void(0)" class="title-color"> <?= get_user_info($available->student_id)->full_name; ?> </a></h5>
+                                            <small class="media-meta"> <?= get_user_info($available->student_id, true); ?> </small>
+                                        </div>
+
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="col-md-12">
-                                            <div class="media-left">
-                                                <div class="avatar avatar-lg avatar-circle" style="padding: 5px;">
-                                                    <a href="javascript:void(0)"><img src="<?= get_picture( "users_v", $item->img_url, '80x80'); ?>" alt=""></a>
-                                                    <i class="status status-online"></i>
+                                    <div class="media">
+                                        <div class="media-left text-center col-md-6" style="float: left; padding: 0 0 20px 20px">
+                                            <h5 class="media-heading"><a href="javascript:void(0)" class="title-color"><?=  $calendar['tarih']; ?></a></h5>
+                                            <p> <?=  $calendar['baslangi']; ?> - <?=  $calendar['bitis']; ?> </p>
+                                            <small class="media-meta"> <?=  $available->toplantiTuru; ?> </small>
+                                            <div class="media-body text-center" style="padding-top: 10px">
+                                                <div class="text-center">
+                                                    <a href="javascript:void(0);" type="button" class="btn rounded btn-warning"> TOPLANTI SAYFASI</a>
                                                 </div>
                                             </div>
-                                            <div class="media-body">
-                                                <h5 class="media-heading"><a href="javascript:void(0)" class="title-color"> <?= $item->full_name; ?> </a></h5>
-                                                <small class="media-meta"> <?= $item->profession ?> </small>
-                                            </div>
                                         </div>
-                                        <div class="col-md-12">
-                                            <div class="media-left">
-                                                <div class="avatar avatar-lg avatar-circle" style="padding: 5px;">
-                                                    <a href="javascript:void(0)"><img src="<?= get_picture( "users_v", $item->img_url, '80x80'); ?>" alt=""></a>
-                                                    <i class="status status-online"></i>
+                                        <div class="col-md-6">
+                                            <div class="col-md-12">
+                                                <div class="media-left">
+                                                    <div class="avatar avatar-lg avatar-circle" style="padding: 5px;">
+                                                        <a href="javascript:void(0)"><img src="<?= get_picture( "users_v", $item->img_url, '80x80'); ?>" alt=""></a>
+                                                        <i class="status status-online"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="media-body">
+                                                    <h5 class="media-heading"><a href="javascript:void(0)" class="title-color"> <?= $item->full_name; ?> </a></h5>
+                                                    <small class="media-meta"> <?= $item->profession ?> </small>
                                                 </div>
                                             </div>
-                                            <div class="media-body">
-                                                <h5 class="media-heading"><a href="javascript:void(0)" class="title-color"> <?= $item->full_name; ?> </a></h5>
-                                                <small class="media-meta"> <?= $item->profession ?> </small>
+                                            <div class="col-md-12">
+                                                <div class="media-left">
+                                                    <div class="avatar avatar-lg avatar-circle" style="padding: 5px;">
+                                                        <a href="javascript:void(0)"><img src="<?= get_picture( "users_v", get_user_info($available->student_id)->img_url, '80x80'); ?>" alt=""></a>
+                                                        <i class="status status-online"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="media-body">
+                                                    <h5 class="media-heading"><a href="javascript:void(0)" class="title-color"> <?= get_user_info($available->student_id)->full_name; ?> </a></h5>
+                                                    <small class="media-meta"> <?= get_user_info($available->student_id, true); ?> </small>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div><!-- search-result -->
-                        </div><!-- END column -->
+                                </div><!-- search-result -->
+                            </div><!-- END column -->
+                        <?php endforeach; ?>
                     </div><!-- .row -->
                 </div><!-- .tab-pane -->
 
                 <div role="tabpanel" id="profile-cancelled" class="tab-pane fade p-md" >
                     <div class="row">
-                        <div class="col-md-6 col-sm-6">
-                            <div class="user-card p-0">
-                                <div class="media white">
-                                    <div class="media-left">
-                                        <div class="avatar avatar-lg avatar-circle" style="padding: 5px;">
-                                            <a href="javascript:void(0)"><img src="<?= get_picture( "users_v", $item->img_url, '80x80'); ?>" alt=""></a>
-                                            <i class="status status-online"></i>
+
+                        <?php
+                        foreach ($cancelled as $available):
+                            $calendar = get_watch_list($available->start_event,$available->end_event);
+                        if ($available->student_id == 0):
+                            ?>
+                            <div class="col-md-12 col-sm-12">
+                                <div class="user-card p-0">
+                                    <div class="media white">
+                                        <div class="media-left">
+                                            <div class="avatar avatar-lg avatar-circle" style="padding: 5px;">
+                                                <a href="javascript:void(0)"><img src="<?= get_picture( "users_v", $item->img_url, '80x80'); ?>" alt=""></a>
+                                                <i class="status status-online"></i>
+                                            </div>
+                                        </div>
+                                        <div class="media-body">
+                                            <h5 class="media-heading"><a href="javascript:void(0)" class="title-color"> <?= $item->full_name; ?> </a></h5>
+                                            <small class="media-meta"> <?= $item->profession ?> </small>
+                                        </div>
+                                        <?php if ($available->status == 4): ?>
+                                            <div class="media-right text-center" style="padding: 20px 20px 20px 0">
+                                                <a href="javascript:void(0);" type="button" class="btn rounded mw-md btn-danger">İPTAL EDİLDİ</a>
+                                            </div>
+                                        <?php endif; ?>
+                                    </div>
+                                    <div class="media">
+                                        <div class="media-left text-center" style="float: left; padding: 0 0 20px 20px">
+                                            <h5 class="media-heading"><a href="javascript:void(0)" class="title-color"><?=  $calendar['tarih']; ?></a></h5>
+                                            <p> <?=  $calendar['baslangi'];  ?> - <?=  $calendar['bitis'];  ?> </p>
+                                            <small class="media-meta"> <?= $available->toplantiTuru; ?> </small>
+                                        </div>
+
+                                        <div class="media-right text-center" style="float: right; padding: 20px 20px 20px 0">
+                                            <a  href="javascript:void(0);" type="button" class="btn rounded mw-md btn-warning">TOPLANTI SAYFASI</a>
                                         </div>
                                     </div>
-                                    <div class="media-body">
-                                        <h5 class="media-heading"><a href="javascript:void(0)" class="title-color"> <?= $item->full_name; ?> </a></h5>
-                                        <small class="media-meta"> <?= $item->profession ?> </small>
-                                    </div>
-                                </div>
-                                <div class="media">
-                                    <div class="media-left text-center" style="float: left; padding: 0 0 20px 20px">
-                                        <h5 class="media-heading"><a href="javascript:void(0)" class="title-color">10.12.2021</a></h5>
-                                        <p> 13:30 - 14:30 </p>
-                                        <small class="media-meta"> Zoom</small>
-                                    </div>
+                                </div><!-- search-result -->
+                            </div><!-- END column -->
+                            <?php else: ?>
+                            <div class="col-md-12 col-sm-12">
+                                <div class="user-card p-0">
+                                    <div class="media white">
 
-                                    <div class="media-right text-center" style="float: right; padding: 20px 20px 20px 0">
-                                        <a href="javascript:void(0);" type="button" class="btn rounded mw-md btn-warning">RANDEVU AL</a>
+                                        <div class="media-left">
+                                            <div class="avatar avatar-lg avatar-circle" style="padding: 5px;">
+                                                <a href="javascript:void(0)"><img src="<?= get_picture( "users_v", get_user_info($available->student_id)->img_url, '80x80'); ?>" alt=""></a>
+                                                <i class="status status-online"></i>
+                                            </div>
+                                        </div>
+                                        <div class="media-body">
+                                            <h5 class="media-heading"><a href="javascript:void(0)" class="title-color"> <?= get_user_info($available->student_id)->full_name; ?> </a></h5>
+                                            <small class="media-meta"> <?= get_user_info($available->student_id, true); ?> </small>
+                                        </div>
+
+                                        <div class="media-right text-center" style="padding: 20px 20px 20px 0">
+                                            <a href="javascript:void(0);" type="button" class="btn rounded mw-md btn-danger">İPTAL EDİLDİ</a>
+                                        </div>
+
                                     </div>
-                                </div>
-                            </div><!-- search-result -->
-                        </div><!-- END column -->
+                                    <div class="media">
+                                        <div class="media-left text-center col-md-6" style="float: left; padding: 0 0 20px 20px">
+                                            <h5 class="media-heading"><a href="javascript:void(0)" class="title-color"><?=  $calendar['tarih']; ?></a></h5>
+                                            <p> <?=  $calendar['baslangi']; ?> - <?=  $calendar['bitis']; ?> </p>
+                                            <small class="media-meta"> <?=  $available->toplantiTuru; ?> </small>
+                                            <div class="media-body text-center" style="padding-top: 10px">
+                                                <div class="text-center">
+                                                    <a href="javascript:void(0);" type="button" class="btn rounded btn-warning"> TOPLANTI SAYFASI</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="col-md-12">
+                                                <div class="media-left">
+                                                    <div class="avatar avatar-lg avatar-circle" style="padding: 5px;">
+                                                        <a href="javascript:void(0)"><img src="<?= get_picture( "users_v", $item->img_url, '80x80'); ?>" alt=""></a>
+                                                        <i class="status status-online"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="media-body">
+                                                    <h5 class="media-heading"><a href="javascript:void(0)" class="title-color"> <?= $item->full_name; ?> </a></h5>
+                                                    <small class="media-meta"> <?= $item->profession ?> </small>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="media-left">
+                                                    <div class="avatar avatar-lg avatar-circle" style="padding: 5px;">
+                                                        <a href="javascript:void(0)"><img src="<?= get_picture( "users_v", get_user_info($available->student_id)->img_url, '80x80'); ?>" alt=""></a>
+                                                        <i class="status status-online"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="media-body">
+                                                    <h5 class="media-heading"><a href="javascript:void(0)" class="title-color"> <?= get_user_info($available->student_id)->full_name; ?> </a></h5>
+                                                    <small class="media-meta"> <?= get_user_info($available->student_id, true); ?> </small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div><!-- search-result -->
+                            </div><!-- END column -->
+                            <?php endif; ?>
+                        <?php  endforeach; ?>
                     </div><!-- .row -->
                 </div><!-- .tab-pane -->
             </div><!-- .tab-content -->
