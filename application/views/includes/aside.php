@@ -79,7 +79,7 @@
                 </li>
 
                 <li>
-                    <a href="<?php echo base_url("mentor"); ?>">
+                    <a href="<?php echo base_url("menti"); ?>">
                         <i class="menu-icon zmdi zmdi-view-dashboard zmdi-hc-lg"></i>
                         <span class="menu-text">Mentiler</span>
                     </a>
