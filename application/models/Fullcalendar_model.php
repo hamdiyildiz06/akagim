@@ -77,4 +77,15 @@ class Fullcalendar_model extends CI_Model
 //        else
 //            return false;
     }
+
+    public function get_all_list($where = array(), $order = "id ASC", $limit = array("count" => 0, "start" => 0))
+    {
+
+        $this->db->where($where)->order_by($order);
+
+        if(!empty($limit))
+            $this->db->limit($limit["count"], $limit["start"]);
+
+        return $this->db->get("calendar")->result();
+    }
 }

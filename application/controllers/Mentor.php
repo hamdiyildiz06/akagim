@@ -555,15 +555,20 @@ class Mentor extends HY_Controller
             )
         );
 
-//        $viewData->courses = $this->course_model->get_all(
-//            array(), "rank ASC"
-//        );
-
-
         $viewData->user_roles = $this->user_role_model->get_all(
             array(
                 "isActive" => 1
             )
+        );
+
+        $viewData->total = count($this->fullcalendar_model->get_all(array("teacher_id" => $id)));
+
+        $viewData->sonBes = $this->fullcalendar_model->get_all_list(
+            array(
+                "teacher_id" => $id,
+                "student_id !=" => 0,
+                "status" => '2'
+            ),"start_event ASC", array("start" => 0, "count" => 5)
         );
 
         $viewData->available_meetings = $this->fullcalendar_model->get_all(
@@ -571,16 +576,15 @@ class Mentor extends HY_Controller
                 "teacher_id" => $id,
                 "student_id" => 0,
                 "status" => '1'
-            )
+            ),"start_event ASC"
         );
-
 
         $viewData->my_meetings = $this->fullcalendar_model->get_all(
             array(
                 "teacher_id" => $id,
                 "student_id !=" => 0,
                 "status" => '2'
-            )
+            ),"start_event ASC"
         );
 
         $viewData->past_meetings = $this->fullcalendar_model->get_all(
@@ -588,29 +592,16 @@ class Mentor extends HY_Controller
                 "teacher_id" => $id,
                 "student_id !=" => 0,
                 "status" => '3'
-            )
+            ),"start_event ASC"
         );
-
-//        $viewData->past_meetings = $this->fullcalendar_model->get_all(
-//            array(
-//                "teacher_id" => $id,
-//                "student_id !=" => 0,
-//                "status" => '3'
-//            )
-//        );
 
         $viewData->cancelled = $this->fullcalendar_model->get_all(
             array(
                 "teacher_id" => $id,
                 "status" => '4'
-            )
+            ),"start_event ASC"
         );
 
-
-
-
-//        print_r($viewData->my_meetings);
-//        die();
 
         /** View'e gönderilecek Değişkenlerin Set Edilmesi.. */
         $viewData->viewFolder = $this->viewFolder;

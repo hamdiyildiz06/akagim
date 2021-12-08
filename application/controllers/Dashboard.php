@@ -64,8 +64,6 @@ class Dashboard extends HY_Controller {
         echo json_encode($data);
     }
 
-
-
     function insert()
     {
         if($this->input->post('title'))

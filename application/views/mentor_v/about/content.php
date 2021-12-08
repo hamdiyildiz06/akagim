@@ -323,6 +323,7 @@
 
     <div class="col-md-4">
         <div class="row">
+
             <div class="col-md-12 col-sm-6">
                 <div class="widget who-to-follow-widget">
                     <div class="widget-header p-h-lg p-v-md">
@@ -330,119 +331,26 @@
                     </div>
                     <hr class="widget-separator m-0">
                     <div class="media-group">
-                        <div class="media-group-item b-0 p-h-sm">
-                            <div class="media">
-                                <div class="media-left">
-                                    <div class="avatar avatar-md avatar-circle">
-                                        <img src="../assets/images/221.jpg" alt="">
-                                        <i class="status status-online"></i>
-                                    </div>
-                                </div>
-                                <div class="media-body">
-                                    <h5 class="media-heading"><a href="javascript:void(0)">John Doe</a></h5>
-                                    <small class="media-meta">Software Engineer</small>
-                                </div>
-                            </div>
-                        </div><!-- .media-group-item -->
 
+                        <?php foreach ($sonBes as $son): ?>
                         <div class="media-group-item b-0 p-h-sm">
                             <div class="media">
                                 <div class="media-left">
                                     <div class="avatar avatar-md avatar-circle">
-                                        <img src="../assets/images/101.jpg" alt="">
-                                        <i class="status status-offline"></i>
+                                        <img src="<?= get_picture( "users_v", get_user_info($son->student_id)->img_url, '80x80'); ?>" alt="">
                                     </div>
                                 </div>
                                 <div class="media-body">
-                                    <h5 class="media-heading"><a href="javascript:void(0)">Adam Khaury</a></h5>
-                                    <small class="media-meta">Web Designer</small>
+                                    <h5 class="media-heading"><a href="javascript:void(0)"><?= get_user_info($son->student_id)->full_name; ?></a></h5>
+                                    <small class="media-meta"><?= get_user_info($son->student_id)->unvan; ?></small>
                                 </div>
                             </div>
                         </div><!-- .media-group-item -->
-
-                        <div class="media-group-item b-0 p-h-sm">
-                            <div class="media">
-                                <div class="media-left">
-                                    <div class="avatar avatar-md avatar-circle">
-                                        <img src="../assets/images/209.jpg" alt="">
-                                        <i class="status status-offline"></i>
-                                    </div>
-                                </div>
-                                <div class="media-body">
-                                    <h5 class="media-heading"><a href="javascript:void(0)">John Doe</a></h5>
-                                    <small class="media-meta">Web Developer</small>
-                                </div>
-                            </div>
-                        </div><!-- .media-group-item -->
-
-                        <div class="media-group-item b-0 p-h-sm">
-                            <div class="media">
-                                <div class="media-left">
-                                    <div class="avatar avatar-md avatar-circle">
-                                        <img src="../assets/images/203.jpg" alt="">
-                                        <i class="status status-away"></i>
-                                    </div>
-                                </div>
-                                <div class="media-body">
-                                    <h5 class="media-heading"><a href="javascript:void(0)">Sara Smith</a></h5>
-                                    <small class="media-meta">UI/UX Designer</small>
-                                </div>
-                            </div>
-                        </div><!-- .media-group-item -->
-
-                        <div class="media-group-item b-0 p-h-sm">
-                            <div class="media">
-                                <div class="media-left">
-                                    <div class="avatar avatar-md avatar-circle">
-                                        <img src="../assets/images/204.jpg" alt="">
-                                        <i class="status status-away"></i>
-                                    </div>
-                                </div>
-                                <div class="media-body">
-                                    <h5 class="media-heading"><a href="javascript:void(0)">Dani Smith</a></h5>
-                                    <small class="media-meta">Teacher Assistant</small>
-                                </div>
-                            </div>
-                        </div><!-- .media-group-item -->
-
-                        <div class="media-group-item b-0 p-h-sm">
-                            <div class="media">
-                                <div class="media-left">
-                                    <div class="avatar avatar-md avatar-circle">
-                                        <img src="../assets/images/202.jpg" alt="">
-                                        <i class="status status-away"></i>
-                                    </div>
-                                </div>
-                                <div class="media-body">
-                                    <h5 class="media-heading"><a href="javascript:void(0)">Sally Sally</a></h5>
-                                    <small class="media-meta">Teacher Assistant</small>
-                                </div>
-                            </div>
-                        </div><!-- .media-group-item -->
+                        <?php endforeach;?>
                     </div>
                 </div><!-- .widget -->
             </div><!-- END column -->
 
-            <div class="col-md-12 col-sm-6">
-                <div class="widget navigation-widget">
-                    <div class="widget-header p-h-lg p-v-md">
-                        <h4 class="widget-title">Navigation</h4>
-                    </div>
-                    <hr class="widget-separator m-0">
-                    <div class="list-group">
-                        <a href="javascript:void(0)" class="list-group-item"><i class="zmdi m-r-md zmdi-hc-lg zmdi-account-box"></i>My Profile</a>
-                        <a href="javascript:void(0)" class="list-group-item"><i class="zmdi m-r-md zmdi-hc-lg zmdi-balance-wallet"></i>Balance</a>
-                        <a href="javascript:void(0)" class="list-group-item">
-                            <i class="zmdi m-r-md zmdi-hc-lg zmdi-globe"></i>Connection
-                            <span class="badge bg-primary">20</span>
-                        </a>
-                        <a href="javascript:void(0)" class="list-group-item"><i class="zmdi m-r-md zmdi-hc-lg zmdi-male"></i>Friends</a>
-                        <hr>
-                        <a href="javascript:void(0)" class="list-group-item"><i class="zmdi m-r-md zmdi-hc-lg zmdi-calendar"></i>Events</a>
-                        <a href="javascript:void(0)" class="list-group-item"><i class="zmdi m-r-md zmdi-hc-lg zmdi-help"></i>Support</a>
-                    </div>
-                </div><!-- .widget -->
-            </div><!-- END column -->
         </div><!-- .row -->
 
     </div><!-- END column -->

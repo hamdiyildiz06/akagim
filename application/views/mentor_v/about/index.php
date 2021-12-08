@@ -83,28 +83,34 @@
 
             <div class="promo-footer">
                 <div class="row no-gutter">
-                    <div class="col-sm-2  col-sm-offset-2 col-xs-6 promo-tab">
+                    <div class="col-sm-2  col-sm-offset-1 col-xs-6 promo-tab">
                         <div class="text-center">
                             <small>Total Toplantılarım</small>
-                            <h4 class="m-0 m-t-xs">150 Toplantı</h4>
+                            <h4 class="m-0 m-t-xs"><?= $total; ?> Toplantı</h4>
                         </div>
                     </div>
                     <div class="col-sm-2 col-xs-6 promo-tab">
                         <div class="text-center">
-                            <small>Toplantılarım</small>
-                            <h4 class="m-0 m-t-xs">15 Toplantı</h4>
+                            <small>Müsit Toplantılarım</small>
+                            <h4 class="m-0 m-t-xs"><?= count($available_meetings); ?> Toplantı</h4>
+                        </div>
+                    </div>
+                    <div class="col-sm-2 col-xs-6 promo-tab">
+                        <div class="text-center">
+                            <small>Hazır toplantılarım</small>
+                            <h4 class="m-0 m-t-xs"><?= count($my_meetings); ?> Toplantı</h4>
                         </div>
                     </div>
                     <div class="col-sm-2 col-xs-6 promo-tab">
                         <div class="text-center">
                             <small>Geçmiş toplantılarım</small>
-                            <h4 class="m-0 m-t-xs">135 Toplantı</h4>
+                            <h4 class="m-0 m-t-xs"><?= count($past_meetings); ?> Toplantı</h4>
                         </div>
                     </div>
                     <div class="col-sm-2 col-xs-6 promo-tab">
                         <div class="text-center">
-                            <small>İptal Edilen toplantılarım</small>
-                            <h4 class="m-0 m-t-xs">135 Toplantı</h4>
+                            <small>İptal toplantılarım</small>
+                            <h4 class="m-0 m-t-xs"><?= count($cancelled); ?> Toplantı</h4>
                         </div>
                     </div>
                 </div>
