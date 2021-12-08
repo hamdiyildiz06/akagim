@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Anamakine: 127.0.0.1
--- Üretim Zamanı: 02 Ara 2021, 14:37:57
+-- Üretim Zamanı: 08 Ara 2021, 13:12:28
 -- Sunucu sürümü: 10.4.19-MariaDB
 -- PHP Sürümü: 7.4.19
 
@@ -55,8 +55,13 @@ CREATE TABLE `calendar` (
   `id` int(11) NOT NULL,
   `teacher_id` int(11) NOT NULL,
   `student_id` int(11) NOT NULL,
+  `status` enum('1','2','3','4') NOT NULL DEFAULT '1',
+  `isActive` enum('0','1','2','3','4') NOT NULL DEFAULT '0',
+  `rezerv` enum('0','1') NOT NULL DEFAULT '0',
   `title` varchar(255) NOT NULL,
   `description` text NOT NULL,
+  `toplantiTuru` varchar(4) NOT NULL DEFAULT 'zoom',
+  `toplantiYeri` varchar(255) NOT NULL,
   `color` varchar(7) NOT NULL,
   `textColor` varchar(7) NOT NULL,
   `start_event` datetime NOT NULL,
@@ -67,22 +72,23 @@ CREATE TABLE `calendar` (
 -- Tablo döküm verisi `calendar`
 --
 
-INSERT INTO `calendar` (`id`, `teacher_id`, `student_id`, `title`, `description`, `color`, `textColor`, `start_event`, `end_event`) VALUES
-(31, 0, 0, 'deneme 1', 'acıklam mavi siyah', '#0275d8', '', '2021-10-16 11:45:00', '2021-10-16 13:00:00'),
-(33, 2, 0, 'nergiz düzenleme yapıyoruz', 'ne olacak bakalım düzenle', '#69006b', '#4d896c', '2021-10-21 17:30:00', '2021-10-21 19:30:00'),
-(34, 0, 0, 'baslik', 'Açıklama', '#3a87ad', '#000000', '2021-10-20 15:00:00', '2021-10-20 15:30:00'),
-(35, 2, 0, 'baslık 1', 'açıklamalar', '#3a87ad', '#000000', '2021-10-16 06:45:00', '2021-10-16 07:15:00'),
-(37, 4, 0, 'bu gün hastaneye gideceğiz', 'saat 11 de gideceğiz 12 de çıkacağız', '#74c4ec', '#000000', '2021-10-17 11:00:00', '2021-10-17 12:00:00'),
-(38, 2, 0, 'baslik', 'rdgfhuıojkıoukl', '#1695d4', '#ac2a2a', '2021-10-07 02:00:00', '2021-10-07 03:00:00'),
-(39, 2, 0, 'deneme başlık', 'deneme açıklama', '#40a9dd', '#e83b3b', '2021-11-28 02:57:52', '2021-11-28 03:57:52'),
-(42, 4, 0, 'sdfasdf', 'asdfasf', '#3a87ad', '#000000', '2021-11-28 11:00:00', '2021-11-28 13:00:00'),
-(43, 2, 0, 'hamdi deneme', 'deneme 1 2 3 hamdi', '#3a87ad', '#000000', '2021-12-02 11:00:00', '2021-12-02 14:30:00'),
-(44, 4, 0, 'sefa', 'sefa deneme 4 5  6', '#3a87ad', '#000000', '2021-12-03 11:00:00', '2021-12-03 15:00:00'),
-(45, 2, 0, 'baslik', '<p>açıklama kısmı</p>', '#3a87ad', '#000000', '2021-11-10 11:00:00', '2021-11-10 12:00:00'),
-(46, 2, 0, 'sumernote', '<p>ayın 4 ü olacak</p>', '#3a87ad', '#ffffff', '2021-12-04 11:00:00', '2021-12-04 16:00:00'),
-(47, 2, 0, 'deneme başlık', 'Peş peşe gelen yenilgilerden sonra Sergen Yalçın\'ın koltuğu sallandı, ancak devam kararı çıktı. Brezilya basını ise Palmeiras\'la Libertadores\'i kazanan Felipe Melo\'nun hocası Abel Ferreira\'nın Beşiktaş\'la görüştüğünü iddia etti.\nKara Kartal\'da hoca değişimi beklenmiyordu ancak Brezilya\'dan gelen haber ortalığı salladı. Brezilya basınından Globo, Libertadores şampiyonu olan Abel Ferreira\'nın Beşiktaş\'la görüştüğünü yazdı.', '#0993d7', '#ffffff', '2021-11-11 05:00:00', '2021-11-11 06:00:00'),
-(48, 2, 0, 'haber başlık', 'Peş peşe gelen yenilgilerden sonra Sergen Yalçın\'ın koltuğu sallandı, ancak devam kararı çıktı. Brezilya basını ise Palmeiras\'la Libertadores\'i kazanan Felipe Melo\'nun hocası Abel Ferreira\'nın Beşiktaş\'la görüştüğünü iddia etti.\nKara Kartal\'da hoca değişimi beklenmiyordu ancak Brezilya\'dan gelen haber ortalığı salladı. Brezilya basınından Globo, Libertadores şampiyonu olan Abel Ferreira\'nın Beşiktaş\'la görüştüğünü yazdı.', '#007ebd', '#ffffff', '2021-11-19 11:00:00', '2021-11-19 12:00:00'),
-(49, 2, 0, 'cuma günü ', 'cuma günü ders açıklaması', '#3a87ad', '#000000', '2021-12-03 08:00:00', '2021-12-03 20:45:00');
+INSERT INTO `calendar` (`id`, `teacher_id`, `student_id`, `status`, `isActive`, `rezerv`, `title`, `description`, `toplantiTuru`, `toplantiYeri`, `color`, `textColor`, `start_event`, `end_event`) VALUES
+(33, 2, 0, '1', '0', '0', 'nergiz düzenleme yapıyoruz', 'ne olacak bakalım düzenle', '', '', '#69006b', '#4d896c', '2021-10-21 17:30:00', '2021-10-21 19:30:00'),
+(35, 2, 0, '1', '0', '0', 'baslık 1', 'açıklamalar', '', '', '#3a87ad', '#000000', '2021-10-16 06:45:00', '2021-10-16 07:15:00'),
+(37, 4, 2, '1', '0', '0', 'bu gün hastaneye gideceğiz', 'saat 11 de gideceğiz 12 de çıkacağız', 'ozel', '', '#74c4ec', '#000000', '2021-10-17 11:00:00', '2021-10-17 12:00:00'),
+(38, 2, 0, '1', '0', '0', 'baslik', 'rdgfhuıojkıoukl', '', '', '#1695d4', '#ac2a2a', '2021-10-07 02:00:00', '2021-10-07 03:00:00'),
+(39, 2, 0, '1', '0', '0', 'deneme başlık', 'deneme açıklama', '', '', '#40a9dd', '#e83b3b', '2021-11-28 02:57:52', '2021-11-28 03:57:52'),
+(42, 4, 2, '4', '4', '0', 'sdfasdf', 'asdfasf', 'ozel', 'isbulta', '#3a87ad', '#000000', '2021-11-28 11:00:00', '2021-11-28 13:00:00'),
+(43, 2, 0, '1', '0', '0', 'hamdi deneme', 'deneme 1 2 3 hamdi', '', '', '#3a87ad', '#000000', '2021-12-01 11:00:00', '2021-12-01 14:30:00'),
+(44, 4, 2, '2', '1', '0', 'sefa', 'sefa deneme 4 5  6', '', '', '#3a87ad', '#000000', '2021-12-03 11:00:00', '2021-12-03 15:00:00'),
+(45, 4, 3, '4', '4', '0', 'baslik', '<p>açıklama kısmı</p>', '', '', '#3a87ad', '#000000', '2021-11-10 11:00:00', '2021-11-10 12:00:00'),
+(46, 4, 0, '1', '0', '0', 'Ekonomi Gündem', '<p>ayın 4 ü olacak</p>', 'ozel', 'ankara abur cubur kafede', '#3a87ad', '#ffffff', '2021-12-10 11:00:00', '2021-12-10 16:00:00'),
+(47, 2, 0, '1', '0', '0', 'deneme başlık', 'Peş peşe gelen yenilgilerden sonra Sergen Yalçın\'ın koltuğu sallandı, ancak devam kararı çıktı. Brezilya basını ise Palmeiras\'la Libertadores\'i kazanan Felipe Melo\'nun hocası Abel Ferreira\'nın Beşiktaş\'la görüştüğünü iddia etti.\nKara Kartal\'da hoca değişimi beklenmiyordu ancak Brezilya\'dan gelen haber ortalığı salladı. Brezilya basınından Globo, Libertadores şampiyonu olan Abel Ferreira\'nın Beşiktaş\'la görüştüğünü yazdı.', '', '', '#0993d7', '#ffffff', '2021-11-11 05:00:00', '2021-11-11 06:00:00'),
+(48, 2, 0, '1', '0', '0', 'haber başlık', 'Peş peşe gelen yenilgilerden sonra Sergen Yalçın\'ın koltuğu sallandı, ancak devam kararı çıktı. Brezilya basını ise Palmeiras\'la Libertadores\'i kazanan Felipe Melo\'nun hocası Abel Ferreira\'nın Beşiktaş\'la görüştüğünü iddia etti.\nKara Kartal\'da hoca değişimi beklenmiyordu ancak Brezilya\'dan gelen haber ortalığı salladı. Brezilya basınından Globo, Libertadores şampiyonu olan Abel Ferreira\'nın Beşiktaş\'la görüştüğünü yazdı.', '', '', '#007ebd', '#ffffff', '2021-11-19 11:00:00', '2021-11-19 12:00:00'),
+(49, 4, 3, '3', '3', '0', 'cuma günü ', 'cuma günü ders açıklaması', '', '', '#3a87ad', '#000000', '2021-12-03 08:00:00', '2021-12-03 20:45:00'),
+(50, 4, 0, '1', '0', '0', 'ayın 7 deneme düzenleniyor', 'zoom denemesi ayın 7 si düzenle', 'zoom', '', '#3a87ad', '#000000', '2021-12-08 10:30:00', '2021-12-08 11:30:00'),
+(51, 2, 0, '1', '0', '0', 'ev gezisi', 'keçiörende ev gezisi yapılacak', 'ozel', 'keçiören', '#5a9dbf', '#f70808', '2021-12-14 07:00:00', '2021-12-14 08:00:00'),
+(52, 4, 0, '1', '0', '0', 'matematik', 'matematik fonksiyonlar', 'ozel', 'keçiören', '#35ade9', '#ed0c0c', '2021-12-07 03:30:00', '2021-12-07 04:30:00');
 
 -- --------------------------------------------------------
 
@@ -585,6 +591,7 @@ CREATE TABLE `users` (
   `email` varchar(50) COLLATE utf8_turkish_ci DEFAULT NULL,
   `user_role_id` int(11) NOT NULL DEFAULT 2,
   `password` varchar(100) COLLATE utf8_turkish_ci DEFAULT NULL,
+  `unvan` varchar(255) COLLATE utf8_turkish_ci NOT NULL,
   `profession` text COLLATE utf8_turkish_ci NOT NULL,
   `topic` varchar(100) COLLATE utf8_turkish_ci NOT NULL,
   `topic_name` varchar(100) COLLATE utf8_turkish_ci NOT NULL,
@@ -602,11 +609,12 @@ CREATE TABLE `users` (
 -- Tablo döküm verisi `users`
 --
 
-INSERT INTO `users` (`id`, `user_name`, `full_name`, `img_url`, `email`, `user_role_id`, `password`, `profession`, `topic`, `topic_name`, `description`, `linkedin`, `facebook`, `instagram`, `zoom`, `permissions`, `isActive`, `createdAt`) VALUES
-(1, 'hamdi', 'hamdi yıldız', '271411.jpg', 'hamdiyildiz@windowslive.com', 2, 'e10adc3949ba59abbe56e057f20f883e', '', '', '', '', '', '', '', '', '', 1, NULL),
-(2, 'hamdiyildiz', 'hamdi yıldız', '11392896 - 32945.jpg', 'hamdiyildiz06@gmail.com', 1, 'e10adc3949ba59abbe56e057f20f883e', 'uzmanlık alanı', 'Girişimin Konusu', 'Girişimin Adı', '', 'Linkedin', 'Facebook', 'Instagram', 'Zoom Link', '', 1, '2019-02-17 09:31:23'),
-(3, 'nargiza', 'sadıkova', '2144472.jpg', 'nargiza@gmail.com', 3, 'e10adc3949ba59abbe56e057f20f883e', '', '', '', '', '', '', '', '', '', 1, '2019-02-26 12:43:40'),
-(4, 'sefayildiz', 'sefa yıldız', 'jens-schumacher-2018.jpg', 'safe@gmail.com', 2, 'e10adc3949ba59abbe56e057f20f883e', '', '', '', '', '', '', '', '', '', 1, '2019-06-17 20:00:32');
+INSERT INTO `users` (`id`, `user_name`, `full_name`, `img_url`, `email`, `user_role_id`, `password`, `unvan`, `profession`, `topic`, `topic_name`, `description`, `linkedin`, `facebook`, `instagram`, `zoom`, `permissions`, `isActive`, `createdAt`) VALUES
+(1, 'hamdi', 'hamdi yıldız', '271411.jpg', 'hamdiyildiz@windowslive.com', 2, 'e10adc3949ba59abbe56e057f20f883e', 'Yönetim Danışmanı & Eğitmen', 'Otomotiv , Planlama , Yönetim Danışmanlığı', '', '', '', '', '', '', '', '', 1, NULL),
+(2, 'hamdiyildiz', 'hamdi yıldız', '11392896 - 32945.jpg', 'hamdiyildiz06@gmail.com', 1, 'e10adc3949ba59abbe56e057f20f883e', 'Backend Developer @ Zingo!', 'Reklam , İş Modeli , Yönetim Danışmanlığı', 'Girişimin Konusu', 'Girişimin Adı', '<p>burada hakkımızda ait yazılar olacak&nbsp;</p>', 'Linkedin', 'Facebook', 'Instagram', 'Zoom Link', '', 1, '2019-02-17 09:31:23'),
+(3, 'nargiza', 'sadıkova', '2144472.jpg', 'nargiza@gmail.com', 3, 'e10adc3949ba59abbe56e057f20f883e', 'Makine Mühendisi', 'Girişimcilik , İş Modeli , Sanat', 'Girişimin konusu', '', '<p>hakımda birşeyler yazılacak buraya</p>', '', '', '', '', '', 1, '2019-02-26 12:43:40'),
+(4, 'sefayildiz', 'sefa yıldız', 'jens-schumacher-2018.jpg', 'safe@gmail.com', 2, 'e10adc3949ba59abbe56e057f20f883e', 'Elektrik Elektronik Mühendisi', 'Girişimcilik , İş Modeli , Yönetim Danışmanlığı', '', '', '          <h3 class=\"m-b-lg m-t-xl\">Hakımda yazısını bilgilerim bölümünden doldurabilirsiniz</h3>\r\n          <div class=\"m-l-lg\">\r\n            <p class=\"m-h-lg fz-md lh-lg\">Infinity is a responsive Bootstrap 3.3.6 Admin Template. It provides you with a vast collection of ready to use code snippets and utilities, many </p><p class=\"m-h-lg fz-md lh-lg\">custom pages and a collection of applications and widgets</p>\r\n            <h4 class=\"fw-600 title-color m-h-lg\">What you get when you get Infinity:</h4>\r\n            <div class=\"m-l-lg\">\r\n              <ul class=\"fz-md lh-lg p-l-lg\" style=\"list-style-type: square;\">\r\n                <li>8 built-in Color Skins And You Can Your Own</li>\r\n                <li>Light/Dark Sidebar Themes</li>\r\n                <li>Free Landing Pages For Your Website</li>\r\n                <li>Multiple Layout</li>\r\n                <li>Responsive layout</li>\r\n                <li>Live Skin Customizer</li>\r\n                <li>Loading progress bar</li>\r\n                <li>Hundreds of UI Components</li>\r\n                <li>Dozens of Widgets</li>\r\n                <li>Hundreds of Utility Classes</li>\r\n                <li>Font Icons(font-awesome, glyphicons, material design icons)</li>\r\n                <li>HTML5 &amp; CSS3</li>\r\n                <li>Bootstrap 3.3.6 Framework</li>\r\n                <li>Sass for CSS preprocessing (compiled CSS included)</li>\r\n                <li>Grunt Tasks Manager</li>\r\n                <li>Bower Dependency Management</li>\r\n                <li>Clean and Friendly Code</li>\r\n              </ul>\r\n            </div>\r\n          </div><!-- .m-l-lg -->', 'Linkedin', 'Facebook', 'Instagram', 'Zoom Link', '', 1, '2019-06-17 20:00:32'),
+(5, 'safigul', 'safigül yıldız', 'noAvatar.png', 'safigul@gmail.com', 2, 'e10adc3949ba59abbe56e057f20f883e', '', '', '', '', '', '', '', '', '', '', 1, '2021-12-07 20:58:43');
 
 -- --------------------------------------------------------
 
@@ -817,7 +825,7 @@ ALTER TABLE `brands`
 -- Tablo için AUTO_INCREMENT değeri `calendar`
 --
 ALTER TABLE `calendar`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
 
 --
 -- Tablo için AUTO_INCREMENT değeri `courses`
@@ -937,7 +945,7 @@ ALTER TABLE `testimonials`
 -- Tablo için AUTO_INCREMENT değeri `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Tablo için AUTO_INCREMENT değeri `user_roles`
