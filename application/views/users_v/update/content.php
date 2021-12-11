@@ -56,7 +56,21 @@
                             <?php } ?>
                         </select>
                         <?php if(isset($form_error)){ ?>
-                            <small class="pull-right input-form-error"> <?php echo form_error("user_role"); ?></small>
+                            <small class="pull-right input-form-error"> <?php echo form_error("user_role_id"); ?></small>
+                        <?php } ?>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Kullanıcı Yetkisi</label>
+                        <select name="girisim_category_id" class="form-control">
+                            <?php foreach($girisim_category as $grs_category) { ?>
+                                <option
+                                    <?= $item->girisim_category_id == $grs_category->id ? "selected" : null; ?>
+                                        value="<?php echo $grs_category->id; ?>"><?php echo $grs_category->title; ?></option>
+                            <?php } ?>
+                        </select>
+                        <?php if(isset($form_error)){ ?>
+                            <small class="pull-right input-form-error"> <?php echo form_error("girisim_category_id"); ?></small>
                         <?php } ?>
                     </div>
 

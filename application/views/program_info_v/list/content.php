@@ -2,7 +2,9 @@
     <div class="col-md-12">
         <h4 class="m-b-lg">
             Program Bilgileri
-            <a href="<?php echo base_url("program_info/update_form/19"); ?>" class="btn btn-outline btn-primary btn-xs pull-right"> <i class="fa fa-plus"></i> Düzenle</a>
+            <?php if (isAllowedWriteModule()): ?>
+                <a href="<?php echo base_url("program_info/update_form/19"); ?>" class="btn btn-outline btn-primary btn-xs pull-right"> <i class="fa fa-plus"></i> Düzenle</a>
+            <?php endif; ?>
         </h4>
     </div><!-- END column -->
 

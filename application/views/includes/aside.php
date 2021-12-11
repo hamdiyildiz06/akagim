@@ -7,7 +7,7 @@
                 <div class="avatar avatar-md avatar-circle">
                     <a href="javascript:void(0)">
                         <img class="img-responsive"
-                             src="<?php echo base_url("assets"); ?>/assets/images/221.jpg"
+                             src="<?= get_picture( "users_v", $user->img_url, '80x80'); ?>"
                              alt="<?php echo convertToSEO($user->full_name); ?>"/>
                     </a>
                 </div><!-- .avatar -->
@@ -71,19 +71,42 @@
                     </a>
                 </li>
 
+                <?php
+                    if (get_active_user()->user_role_id == 2){
+                        $actifUrl = "mentor/about/".get_active_user()->id;
+                    }else{
+                        $actifUrl = "mentor";
+                    }
+                ?>
                 <li>
-                    <a href="<?php echo base_url("mentor"); ?>">
+                    <a href="<?php echo base_url($actifUrl); ?>">
                         <i class="menu-icon zmdi zmdi-view-dashboard zmdi-hc-lg"></i>
                         <span class="menu-text">Mentorler</span>
                     </a>
                 </li>
-
+                <?php
+                    if (get_active_user()->user_role_id == 3){
+                        $actifUrl = "menti/about/".get_active_user()->id;
+                    }else{
+                        $actifUrl = "menti";
+                    }
+                ?>
                 <li>
-                    <a href="<?php echo base_url("menti"); ?>">
+                    <a href="<?php echo base_url($actifUrl); ?>">
                         <i class="menu-icon zmdi zmdi-view-dashboard zmdi-hc-lg"></i>
                         <span class="menu-text">Mentiler</span>
                     </a>
                 </li>
+
+                <?php if (isAllowedViewModule("girisim_categories")){ ?>
+                    <li>
+                        <a href="<?php echo base_url("girisim_categories"); ?>">
+                            <i class="menu-icon zmdi zmdi-email zmdi-hc-lg"></i>
+                            <span class="menu-text">Girişim İşlemleri</span>
+                        </a>
+                    </li>
+                <?php } ?>
+
 
                 <li>
                     <a href="<?php echo base_url("users/profil_form/$user->id"); ?>">
@@ -105,38 +128,50 @@
 
 
 
-                <?php if (isAllowedViewModule("portfolio_categories") || isAllowedViewModule("portfolio")){ ?>
-                    <li class="has-submenu">
-                        <a href="javascript:void(0)" class="submenu-toggle">
-                            <i class="menu-icon fa fa-asterisk"></i>
-                            <span class="menu-text">Girişim İşlemleri</span>
-                            <i class="menu-caret zmdi zmdi-hc-sm zmdi-chevron-right"></i>
-                        </a>
-                        <ul class="submenu">
-                            <li>
-                                <a href="<?php echo base_url("portfolio_categories"); ?>">
-                                    <span class="menu-text">Grup Oluştur</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="<?php echo base_url("portfolio"); ?>">
-                                    <span class="menu-text">Portfolyo</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                <?php } ?>
 
-
-                <?php if (isAllowedViewModule("courses")){ ?>
-                    <li>
-                        <a href="<?php echo base_url("courses"); ?>">
-                            <i class="menu-icon fa fa-calendar"></i>
-                            <span class="menu-text">Detaylı Ajanda</span>
-                        </a>
-                    </li>
-                <?php } ?>
-
+<!--                --><?php //if (isAllowedViewModule("girisim_categories") || isAllowedViewModule("girisim")){ ?>
+<!--                    <li class="has-submenu">-->
+<!--                        <a href="javascript:void(0)" class="submenu-toggle">-->
+<!--                            <i class="menu-icon fa fa-asterisk"></i>-->
+<!--                            <span class="menu-text">Girişim İşlemleri</span>-->
+<!--                            <i class="menu-caret zmdi zmdi-hc-sm zmdi-chevron-right"></i>-->
+<!--                        </a>-->
+<!--                        <ul class="submenu">-->
+<!--                            <li>-->
+<!--                                <a href="--><?php //echo base_url("girisim_categories"); ?><!--">-->
+<!--                                    <span class="menu-text">Girişim Oluştur</span>-->
+<!--                                </a>-->
+<!--                            </li>-->
+<!--                            <li>-->
+<!--                                <a href="--><?php //echo base_url("girisim"); ?><!--">-->
+<!--                                    <span class="menu-text">Girişimci Ekle</span>-->
+<!--                                </a>-->
+<!--                            </li>-->
+<!--                        </ul>-->
+<!--                    </li>-->
+<!--                --><?php //} ?>
+<!---->
+<!--                --><?php //if (isAllowedViewModule("portfolio_categories") || isAllowedViewModule("portfolio")){ ?>
+<!--                    <li class="has-submenu">-->
+<!--                        <a href="javascript:void(0)" class="submenu-toggle">-->
+<!--                            <i class="menu-icon fa fa-asterisk"></i>-->
+<!--                            <span class="menu-text">Girişim İşlemleri</span>-->
+<!--                            <i class="menu-caret zmdi zmdi-hc-sm zmdi-chevron-right"></i>-->
+<!--                        </a>-->
+<!--                        <ul class="submenu">-->
+<!--                            <li>-->
+<!--                                <a href="--><?php //echo base_url("portfolio_categories"); ?><!--">-->
+<!--                                    <span class="menu-text">Girişim Oluştur</span>-->
+<!--                                </a>-->
+<!--                            </li>-->
+<!--                            <li>-->
+<!--                                <a href="--><?php //echo base_url("portfolio"); ?><!--">-->
+<!--                                    <span class="menu-text">Girişimci Ekle</span>-->
+<!--                                </a>-->
+<!--                            </li>-->
+<!--                        </ul>-->
+<!--                    </li>-->
+<!--                --><?php //} ?>
 
                 <?php if (isAllowedViewModule("user_roles")){ ?>
                     <li>
@@ -156,14 +191,14 @@
                     </li>
                 <?php } ?>
 
-                <?php if (isAllowedViewModule("dashboard")){ ?>
+
                     <li>
-                        <a href="https://www.akagim.com/">
+                        <a target="_blank" href="https://www.akagim.com/">
                             <i class="menu-icon zmdi zmdi-view-web zmdi-hc-lg"></i>
                             <span class="menu-text">Siteye Git</span>
                         </a>
                     </li>
-                <?php } ?>
+
             </ul><!-- .app-menu -->
         </div><!-- .menubar-scroll-inner -->
     </div><!-- .menubar-scroll -->

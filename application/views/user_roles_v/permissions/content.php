@@ -24,7 +24,6 @@
                             <th>Ekleme</th>
                             <th>Düzenleme</th>
                             <th>Silme</th>
-                            <th>Özel</th>
                         </thead>
                         <tbody>
                         <?php foreach (getControllerList() as $controllerName) { ?>
@@ -49,11 +48,6 @@
                                         <input
                                                 <?php echo (isset($permissions->$controllerName) && isset($permissions->$controllerName->delete)) ? "checked"  : null; ?>
                                                 name="permissions[<?php echo $controllerName; ?>][delete]" type="checkbox" data-switchery data-color="#10c469"/>
-                                    </td>
-                                    <td class="w50 text-center">
-                                        <input
-                                            <?php echo (isset($permissions->$controllerName) && isset($permissions->$controllerName->special)) ? "checked"  : null; ?>
-                                                name="permissions[<?php echo $controllerName; ?>][special]" type="checkbox" data-switchery data-color="#10c469"/>
                                     </td>
                                 </tr>
                         <?php } ?>

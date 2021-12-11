@@ -29,12 +29,9 @@ function get_active_user(){
 }
 
 function isAdmin(){
-
     $t = &get_instance();
 
     $user = $t->session->userdata("user");
-
-    return true;
 
     if($user->user_role == "admin")
         return true;
@@ -237,7 +234,6 @@ function delete_picture($model,$id,$resolution,$img_url = ""){
         return unlink("uploads/{$t->viewFolder}/{$resolution}/{$fileName->img_url}");
 }
 
-
 function delete_picture_user($model,$id,$resolution){
     $t = get_instance();
     $fileName =  $t->$model->get(
@@ -283,7 +279,7 @@ function get_watch_list($baslangic , $bitis){
 
     $calendar = [
         "tarih" => $baslangict[2] .'-'. $baslangict[1] .'-'. $baslangict[0],
-        "baslangi" => $baslangics[0] .':'.$baslangics[1],
+        "baslangic" => $baslangics[0] .':'.$baslangics[1],
         "bitis" => $bitiss[0] .':'.$bitiss[1]
     ];
 

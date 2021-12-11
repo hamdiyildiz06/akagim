@@ -1,6 +1,6 @@
 <?php
 
-class Testimonials extends HY_Controller
+class Girisim_categories extends HY_Controller
 {
     public $viewFolder = "";
 
@@ -9,9 +9,9 @@ class Testimonials extends HY_Controller
 
         parent::__construct();
 
-        $this->viewFolder = "testimonials_v";
+        $this->viewFolder = "girisim_categories_v";
 
-        $this->load->model("testimonial_model");
+        $this->load->model("girisim_category_model");
 
         if(!get_active_user()){
             redirect(base_url("login"));
@@ -24,14 +24,35 @@ class Testimonials extends HY_Controller
         $viewData = new stdClass();
 
         /** Tablodan Verilerin Getirilmesi.. */
-        $items = $this->testimonial_model->get_all(
-            array(), "rank ASC"
+        $viewData->items = $this->girisim_category_model->get_all(
+            array(
+                "isActive" => 1
+            )
+        );
+
+        /** View'e gönderilecek Değişkenlerin Set Edilmesi.. */
+        $viewData->viewFolder = $this->viewFolder;
+        $viewData->subViewFolder = "show";
+
+
+        $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
+    }
+
+    public function list(){
+
+        $viewData = new stdClass();
+
+        /** Tablodan Verilerin Getirilmesi.. */
+        $viewData->items = $this->girisim_category_model->get_all(
+            array(
+                "isActive" => 1
+            )
         );
 
         /** View'e gönderilecek Değişkenlerin Set Edilmesi.. */
         $viewData->viewFolder = $this->viewFolder;
         $viewData->subViewFolder = "list";
-        $viewData->items = $items;
+
 
         $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
     }
@@ -53,28 +74,7 @@ class Testimonials extends HY_Controller
         $this->load->library("form_validation");
 
         // Kurallar yazilir..
-
-        if($_FILES["img_url"]["name"] == ""){
-
-            $alert = array(
-                "title" => "İşlem Başarısız",
-                "text" => "Lütfen bir görsel seçiniz",
-                "type"  => "error"
-            );
-
-            // İşlemin Sonucunu Session'a yazma işlemi...
-            $this->session->set_flashdata("alert", $alert);
-
-            redirect(base_url("testimonials/new_form"));
-
-            die();
-        }
-
         $this->form_validation->set_rules("title", "Başlık", "required|trim");
-        $this->form_validation->set_rules("description", "Mesaj", "required|trim");
-        $this->form_validation->set_rules("company", "Şirket Adı", "required|trim");
-        $this->form_validation->set_rules("full_name", "Ad Soyad", "required|trim");
-
         $this->form_validation->set_message(
             array(
                 "required"  => "<b>{field}</b> alanı doldurulmalıdır"
@@ -83,46 +83,20 @@ class Testimonials extends HY_Controller
 
         // Form Validation Calistirilir..
         $validate = $this->form_validation->run();
-
         if($validate){
 
-            // Upload Süreci...
+            $file_name = convertToSEO(pathinfo($_FILES["img_url"]["name"], PATHINFO_FILENAME)) . "-" . rand(1000,99999) . "." . pathinfo($_FILES["img_url"]["name"], PATHINFO_EXTENSION);
+            $image_200x200 = upload_picture($_FILES["img_url"]["tmp_name"], "uploads/$this->viewFolder",200,200, $file_name);
 
-            $file_name = convertToSEO(pathinfo($_FILES["img_url"]["name"], PATHINFO_FILENAME)) . "." . pathinfo($_FILES["img_url"]["name"], PATHINFO_EXTENSION);
+            if($image_200x200){
 
-            $image_90x90 = upload_picture($_FILES["img_url"]["tmp_name"], "uploads/$this->viewFolder",90,90, $file_name);
-
-            if($image_90x90){
-
-                $insert = $this->testimonial_model->add(
-                    array(
-                        "title"         => $this->input->post("title"),
-                        "description"   => $this->input->post("description"),
-                        "company"       => $this->input->post("company"),
-                        "full_name"     => $this->input->post("full_name"),
-                        "img_url"       => $file_name,
-                        "isActive"      => 1,
-                        "createdAt"     => date("Y-m-d H:i:s")
-                    )
+                $data = array(
+                    "title"         => $this->input->post("title"),
+                    "url"           => convertToSEO($this->input->post("title")),
+                    "img_url"       => $file_name,
+                    "isActive"      => 1,
+                    "createdAt"     => date("Y-m-d H:i:s")
                 );
-
-                // TODO Alert sistemi eklenecek...
-                if($insert){
-
-                    $alert = array(
-                        "title" => "İşlem Başarılı",
-                        "text" => "Kayıt başarılı bir şekilde eklendi",
-                        "type"  => "success"
-                    );
-
-                } else {
-
-                    $alert = array(
-                        "title" => "İşlem Başarısız",
-                        "text" => "Kayıt Ekleme sırasında bir problem oluştu",
-                        "type"  => "error"
-                    );
-                }
 
             } else {
 
@@ -133,17 +107,33 @@ class Testimonials extends HY_Controller
                 );
 
                 $this->session->set_flashdata("alert", $alert);
-
-                redirect(base_url("testimonials/new_form"));
-
+                redirect(base_url("girisim_categories/new_form"));
                 die();
+            }
 
+            $insert = $this->girisim_category_model->add($data);
+
+            // TODO Alert sistemi eklenecek...
+            if($insert){
+
+                $alert = array(
+                    "title" => "İşlem Başarılı",
+                    "text" => "Kayıt başarılı bir şekilde eklendi",
+                    "type"  => "success"
+                );
+
+            } else {
+
+                $alert = array(
+                    "title" => "İşlem Başarısız",
+                    "text" => "Kayıt Ekleme sırasında bir problem oluştu",
+                    "type"  => "error"
+                );
             }
 
             // İşlemin Sonucunu Session'a yazma işlemi...
             $this->session->set_flashdata("alert", $alert);
-
-            redirect(base_url("testimonials"));
+            redirect(base_url("girisim_categories"));
 
         } else {
 
@@ -164,12 +154,12 @@ class Testimonials extends HY_Controller
         $viewData = new stdClass();
 
         /** Tablodan Verilerin Getirilmesi.. */
-        $item = $this->testimonial_model->get(
+        $item = $this->girisim_category_model->get(
             array(
                 "id"    => $id,
             )
         );
-        
+
         /** View'e gönderilecek Değişkenlerin Set Edilmesi.. */
         $viewData->viewFolder = $this->viewFolder;
         $viewData->subViewFolder = "update";
@@ -180,7 +170,6 @@ class Testimonials extends HY_Controller
 
     }
 
-
     public function update($id){
 
         $this->load->library("form_validation");
@@ -188,10 +177,6 @@ class Testimonials extends HY_Controller
         // Kurallar yazilir..
 
         $this->form_validation->set_rules("title", "Başlık", "required|trim");
-        $this->form_validation->set_rules("description", "Mesaj", "required|trim");
-        $this->form_validation->set_rules("company", "Şirket Adı", "required|trim");
-        $this->form_validation->set_rules("full_name", "Ad Soyad", "required|trim");
-
 
         $this->form_validation->set_message(
             array(
@@ -201,24 +186,23 @@ class Testimonials extends HY_Controller
 
         // Form Validation Calistirilir..
         $validate = $this->form_validation->run();
-
         if($validate){
 
             // Upload Süreci...
             if($_FILES["img_url"]["name"] !== "") {
+                delete_picture("girisim_category_model", $id, "200x200");
 
-                $file_name = convertToSEO(pathinfo($_FILES["img_url"]["name"], PATHINFO_FILENAME)) . "." . pathinfo($_FILES["img_url"]["name"], PATHINFO_EXTENSION);
+                $file_name = convertToSEO(pathinfo($_FILES["img_url"]["name"], PATHINFO_FILENAME))  . "-" . rand(1000,99999) . "." .  pathinfo($_FILES["img_url"]["name"], PATHINFO_EXTENSION);
 
-                $image_90x90 = upload_picture($_FILES["img_url"]["tmp_name"], "uploads/$this->viewFolder",90,90, $file_name);
+                $image_200x200 = upload_picture($_FILES["img_url"]["tmp_name"], "uploads/$this->viewFolder",200,200, $file_name);
+//                $image_555x343 = upload_picture($_FILES["img_url"]["tmp_name"], "uploads/$this->viewFolder",555,343, $file_name);
 
-                if($image_90x90){
+                if($image_200x200 ){
 
                     $data = array(
-                        "title"         => $this->input->post("title"),
-                        "description"   => $this->input->post("description"),
-                        "company"       => $this->input->post("company"),
-                        "full_name"     => $this->input->post("full_name"),
-                        "img_url"       => $file_name,
+                        "title" => $this->input->post("title"),
+                        "url" => convertToSEO($this->input->post("title")),
+                        "img_url" => $file_name,
                     );
 
                 } else {
@@ -231,7 +215,7 @@ class Testimonials extends HY_Controller
 
                     $this->session->set_flashdata("alert", $alert);
 
-                    redirect(base_url("testimonials/update_form/$id"));
+                    redirect(base_url("girisim_categories/update_form/$id"));
 
                     die();
 
@@ -240,15 +224,12 @@ class Testimonials extends HY_Controller
             } else {
 
                 $data = array(
-                    "title"         => $this->input->post("title"),
-                    "description"   => $this->input->post("description"),
-                    "company"       => $this->input->post("company"),
-                    "full_name"     => $this->input->post("full_name"),
+                    "title" => $this->input->post("title"),
+                    "url" => convertToSEO($this->input->post("title")),
                 );
-
             }
 
-            $update = $this->testimonial_model->update(array("id" => $id), $data);
+            $update = $this->girisim_category_model->update(array("id" => $id), $data);
 
             // TODO Alert sistemi eklenecek...
             if($update){
@@ -270,8 +251,7 @@ class Testimonials extends HY_Controller
 
             // İşlemin Sonucunu Session'a yazma işlemi...
             $this->session->set_flashdata("alert", $alert);
-
-            redirect(base_url("testimonials"));
+            redirect(base_url("girisim_categories/update_form/$id"));
 
         } else {
 
@@ -283,7 +263,7 @@ class Testimonials extends HY_Controller
             $viewData->form_error = true;
 
             /** Tablodan Verilerin Getirilmesi.. */
-            $viewData->item = $this->testimonial_model->get(
+            $viewData->item = $this->girisim_category_model->get(
                 array(
                     "id"    => $id,
                 )
@@ -295,8 +275,8 @@ class Testimonials extends HY_Controller
     }
 
     public function delete($id){
-
-        $delete = $this->testimonial_model->delete(
+        delete_picture("girisim_category_model", $id, "200x200");
+        $delete = $this->girisim_category_model->delete(
             array(
                 "id"    => $id
             )
@@ -323,7 +303,7 @@ class Testimonials extends HY_Controller
         }
 
         $this->session->set_flashdata("alert", $alert);
-        redirect(base_url("testimonials"));
+        redirect(base_url("girisim_categories"));
 
 
     }
@@ -334,7 +314,7 @@ class Testimonials extends HY_Controller
 
             $isActive = ($this->input->post("data") === "true") ? 1 : 0;
 
-            $this->testimonial_model->update(
+            $this->girisim_category_model->update(
                 array(
                     "id"    => $id
                 ),
@@ -345,28 +325,76 @@ class Testimonials extends HY_Controller
         }
     }
 
-    public function rankSetter(){
+    public function about($id){
+
+        $viewData = new stdClass();
+
+        $this->load->model("user_model");
+        /** Tablodan Verilerin Getirilmesi.. */
+        $viewData->itemUser = $this->user_model->get_all(
+            array(
+                "isActive"    => 1,
+                "girisim_category_id" => $id
+            )
+        );
+
+        $viewData->itemGirisim = $this->girisim_category_model->get_all(
+            array(
+                "id" => $id,
+                "isActive" => 1
+            )
+        );
 
 
-        $data = $this->input->post("data");
+//        $viewData->total = count($this->fullcalendar_model->get_all(array("teacher_id" => $id)));
 
-        parse_str($data, $order);
+//        $viewData->sonBes = $this->fullcalendar_model->get_all_list(
+//            array(
+//                "teacher_id" => $id,
+//                "student_id !=" => 0,
+//                "status" => '2'
+//            ),"start_event ASC", array("start" => 0, "count" => 5)
+//        );
 
-        $items = $order["ord"];
+//        $viewData->available_meetings = $this->fullcalendar_model->get_all(
+//            array(
+//                "teacher_id" => $id,
+//                "student_id" => 0,
+//                "status" => '1'
+//            ),"start_event ASC"
+//        );
 
-        foreach ($items as $rank => $id){
+//        $viewData->my_meetings = $this->fullcalendar_model->get_all(
+//            array(
+//                "teacher_id" => $id,
+//                "student_id !=" => 0,
+//                "status" => '2'
+//            ),"start_event ASC"
+//        );
 
-            $this->testimonial_model->update(
-                array(
-                    "id"        => $id,
-                    "rank !="   => $rank
-                ),
-                array(
-                    "rank"      => $rank
-                )
-            );
+//        $viewData->past_meetings = $this->fullcalendar_model->get_all(
+//            array(
+//                "teacher_id" => $id,
+//                "student_id !=" => 0,
+//                "status" => '3'
+//            ),"start_event ASC"
+//        );
 
-        }
+//        $viewData->cancelled = $this->fullcalendar_model->get_all(
+//            array(
+//                "teacher_id" => $id,
+//                "status" => '4'
+//            ),"start_event ASC"
+//        );
+
+
+        /** View'e gönderilecek Değişkenlerin Set Edilmesi.. */
+        $viewData->viewFolder = $this->viewFolder;
+        $viewData->subViewFolder = "about";
+        $viewData->item = $item;
+
+        $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
+
 
     }
 

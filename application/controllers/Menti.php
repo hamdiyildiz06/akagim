@@ -47,24 +47,24 @@ class Menti extends HY_Controller
 
         $viewData = new stdClass();
 
-        $user = get_active_user();
 
-//        if(isAdmin()){
-//
-//            $where = array();
-//
-//        } else {
-//
-//            $where = array(
-//                "id"    => $user->id,
-//            );
-//
-//        }
+        $user = get_active_user();
+        if ($user->user_role_id != 1){
+            $alert = array(
+                "title" => "İşlem Başarısız",
+                "text" => "Bu İşlem için yetkiniz yok",
+                "type"  => "error"
+            );
+
+            $this->session->set_flashdata("alert", $alert);
+            redirect(base_url("program_info"));
+            die();
+        }
 
         /** Tablodan Verilerin Getirilmesi.. */
         $items = $this->user_model->get_all(
             array(
-                "user_role_id" => 2,
+                "user_role_id" => 3,
             )
         );
 
@@ -79,7 +79,18 @@ class Menti extends HY_Controller
     public function new_form(){
 
         $viewData = new stdClass();
+        $user = get_active_user();
+        if ($user->user_role_id != 1){
+            $alert = array(
+                "title" => "İşlem Başarısız",
+                "text" => "Bu İşlem için yetkiniz yok",
+                "type"  => "error"
+            );
 
+            $this->session->set_flashdata("alert", $alert);
+            redirect(base_url("program_info"));
+            die();
+        }
 
 
         $viewData->user_roles = $this->user_role_model->get_all(
@@ -97,6 +108,19 @@ class Menti extends HY_Controller
     }
 
     public function save(){
+        $user = get_active_user();
+        if ($user->user_role_id != 1){
+            $alert = array(
+                "title" => "İşlem Başarısız",
+                "text" => "Bu İşlem için yetkiniz yok",
+                "type"  => "error"
+            );
+
+            $this->session->set_flashdata("alert", $alert);
+            redirect(base_url("program_info"));
+            die();
+        }
+
 
         $this->load->library("form_validation");
 
@@ -176,6 +200,19 @@ class Menti extends HY_Controller
     public function update_form($id){
 
         $viewData = new stdClass();
+        $user = get_active_user();
+        if ($user->user_role_id != 1){
+            $alert = array(
+                "title" => "İşlem Başarısız",
+                "text" => "Bu İşlem için yetkiniz yok",
+                "type"  => "error"
+            );
+
+            $this->session->set_flashdata("alert", $alert);
+            redirect(base_url("program_info"));
+            die();
+        }
+
 
         /** Tablodan Verilerin Getirilmesi.. */
         $item = $this->user_model->get(
@@ -218,7 +255,6 @@ class Menti extends HY_Controller
         $viewData->item = $item;
 
         $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
-
 
     }
 
@@ -391,6 +427,18 @@ class Menti extends HY_Controller
     }
 
     public function delete($id){
+        $user = get_active_user();
+        if ($user->user_role_id != 1){
+            $alert = array(
+                "title" => "İşlem Başarısız",
+                "text" => "Bu İşlem için yetkiniz yok",
+                "type"  => "error"
+            );
+
+            $this->session->set_flashdata("alert", $alert);
+            redirect(base_url("program_info"));
+            die();
+        }
 
         $delete = $this->user_model->delete(
             array(
@@ -442,7 +490,18 @@ class Menti extends HY_Controller
     }
 
     public function courses($id){
+        $user = get_active_user();
+        if ($user->user_role_id != 1){
+            $alert = array(
+                "title" => "İşlem Başarısız",
+                "text" => "Bu İşlem için yetkiniz yok",
+                "type"  => "error"
+            );
 
+            $this->session->set_flashdata("alert", $alert);
+            redirect(base_url("program_info"));
+            die();
+        }
         $this->load->model('fullcalendar_model');
 
         $viewData = new stdClass();
@@ -486,7 +545,18 @@ class Menti extends HY_Controller
     }
 
     public function lesson($id,$lesson){
+        $user = get_active_user();
+        if ($user->user_role_id != 1){
+            $alert = array(
+                "title" => "İşlem Başarısız",
+                "text" => "Bu İşlem için yetkiniz yok",
+                "type"  => "error"
+            );
 
+            $this->session->set_flashdata("alert", $alert);
+            redirect(base_url("program_info"));
+            die();
+        }
         $this->load->model('fullcalendar_model');
 
         $viewData = new stdClass();

@@ -17,7 +17,7 @@
                     <div class="media">
                         <div class="media-body text-center" style=" padding: 0 0 20px 20px">
                             <h5 class="media-heading"><a href="javascript:void(0)" class="title-color"><?=  $calendar['tarih']; ?></a></h5>
-                            <p> <?=  $calendar['baslangi'];  ?> - <?=  $calendar['bitis'];  ?> </p>
+                            <p> <?=  $calendar['baslangic'];  ?> - <?=  $calendar['bitis'];  ?> </p>
                             <p class="media-meta"> <?= $event->toplantiTuru; ?> </p>
                             <?php if ($event->toplantiTuru == "ozel"):  ?>
                             <p class="media-meta"> <?= $event->toplantiYeri; ?> </p>
@@ -28,11 +28,24 @@
 <!--                            <a  href="javascript:void(0);" type="button" class="btn rounded mw-md btn-warning">Rezerv Et</a>-->
 <!--                        </div>-->
                     </div>
-<!--                    <hr class="widget-separator m-0">-->
-<!--                    <div class="text-center" style="padding: 20px 20px 20px 0">-->
-<!--                        <p> BİGG İTÜ ÇEKİRDEK tarafından oluşturuldu </p>-->
-<!--                    </div>-->
+                    <?php if ($menti->topic_name): ?>
+                    <hr class="widget-separator m-0">
+                    <div class="text-center" style="padding: 20px 20px 20px 0">
+                        <p> <?= $menti->topic_name ?> </p>
+                    </div>
+                    <?php endif; ?>
 
+                    <?php if (($event->toplantiTuru == "zoom") && ($mentor->id == get_active_user()->id) || ($menti->id == get_active_user()->id) || (get_active_user()->user_role_id == 1)): ?>
+                        <hr class="widget-separator m-0">
+                        <div class="text-center" style="padding: 20px 20px 20px 0;">
+                            <p class="text-justify-center">
+                                <a href="<?= $mentor->zoom; ?>">
+                                    <i class="m-r-lg fa fa-video-camera fa-3x fa-align-justify media-middle" aria-hidden="true"></i>
+                                    <?= $event->toplantiTuru ?> ' ile bağlanmaık için Tıklayınız
+                                </a>
+                            </p>
+                        </div>
+                    <?php endif; ?>
                     <hr class="widget-separator m-0">
 
                     <div class="media-group">
@@ -97,12 +110,6 @@
 
                                 <?php }else{ ?>
 
-
-
-
-
-
-
                                     <div class="col-md-12 col-sm-12" style="padding: 20px">
                                         <div class="user-card p-0 col-md-11">
                                             <div class="media white ">
@@ -126,7 +133,7 @@
                                             <div class="media">
                                                 <div class="media-left text-center col-md-6" style="float: left; padding: 0 0 20px 20px">
                                                     <h5 class="media-heading"><a href="javascript:void(0)" class="title-color"><?=  $calendar['tarih']; ?></a></h5>
-                                                    <p> <?=  $calendar['baslangi']; ?> - <?=  $calendar['bitis']; ?> </p>
+                                                    <p> <?=  $calendar['baslangic']; ?> - <?=  $calendar['bitis']; ?> </p>
                                                     <small class="media-meta"> <?=  $available->toplantiTuru; ?> </small>
                                                     <div class="media-body text-center" style="padding-top: 10px">
                                                         <div class="text-center">
@@ -191,10 +198,6 @@
                                             </div>
                                         </div><!-- search-result -->
                                     </div><!-- END column -->
-
-
-
-
 
                                 <?php }?>
                             </div>

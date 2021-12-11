@@ -60,7 +60,7 @@
                                 <div class="media">
                                     <div class="media-left text-center" style="float: left; padding: 0 0 20px 20px">
                                         <h5 class="media-heading"><a href="javascript:void(0)" class="title-color"><?=  $calendar['tarih']; ?></a></h5>
-                                        <p> <?=  $calendar['baslangi'];  ?> - <?=  $calendar['bitis'];  ?> </p>
+                                        <p> <?=  $calendar['baslangic'];  ?> - <?=  $calendar['bitis'];  ?> </p>
                                         <small class="media-meta"> <?= $available->toplantiTuru; ?> </small>
                                     </div>
 
@@ -104,7 +104,7 @@
                                 <div class="media">
                                     <div class="media-left text-center col-md-6" style="float: left; padding: 0 0 20px 20px">
                                         <h5 class="media-heading"><a href="javascript:void(0)" class="title-color"><?=  $calendar['tarih']; ?></a></h5>
-                                        <p> <?=  $calendar['baslangi']; ?> - <?=  $calendar['bitis']; ?> </p>
+                                        <p> <?=  $calendar['baslangic']; ?> - <?=  $calendar['bitis']; ?> </p>
                                         <small class="media-meta"> <?=  $available->toplantiTuru; ?> </small>
                                         <div class="media-body text-center" style="padding-top: 10px">
                                             <div class="text-center">
@@ -171,7 +171,7 @@
                                     <div class="media">
                                         <div class="media-left text-center col-md-6" style="float: left; padding: 0 0 20px 20px">
                                             <h5 class="media-heading"><a href="javascript:void(0)" class="title-color"><?=  $calendar['tarih']; ?></a></h5>
-                                            <p> <?=  $calendar['baslangi']; ?> - <?=  $calendar['bitis']; ?> </p>
+                                            <p> <?=  $calendar['baslangic']; ?> - <?=  $calendar['bitis']; ?> </p>
                                             <small class="media-meta"> <?=  $available->toplantiTuru; ?> </small>
                                             <div class="media-body text-center" style="padding-top: 10px">
                                                 <div class="text-center">
@@ -242,7 +242,7 @@
                                     <div class="media">
                                         <div class="media-left text-center" style="float: left; padding: 0 0 20px 20px">
                                             <h5 class="media-heading"><a href="javascript:void(0)" class="title-color"><?=  $calendar['tarih']; ?></a></h5>
-                                            <p> <?=  $calendar['baslangi'];  ?> - <?=  $calendar['bitis'];  ?> </p>
+                                            <p> <?=  $calendar['baslangic'];  ?> - <?=  $calendar['bitis'];  ?> </p>
                                             <small class="media-meta"> <?= $available->toplantiTuru; ?> </small>
                                         </div>
 
@@ -276,7 +276,7 @@
                                     <div class="media">
                                         <div class="media-left text-center col-md-6" style="float: left; padding: 0 0 20px 20px">
                                             <h5 class="media-heading"><a href="javascript:void(0)" class="title-color"><?=  $calendar['tarih']; ?></a></h5>
-                                            <p> <?=  $calendar['baslangi']; ?> - <?=  $calendar['bitis']; ?> </p>
+                                            <p> <?=  $calendar['baslangic']; ?> - <?=  $calendar['bitis']; ?> </p>
                                             <small class="media-meta"> <?=  $available->toplantiTuru; ?> </small>
                                             <div class="media-body text-center" style="padding-top: 10px">
                                                 <div class="text-center">

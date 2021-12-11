@@ -52,7 +52,7 @@
                                                                     <div class="mail-item-header">
 
                                                                         <a href="#"><span style="padding: 5px; font-size: 14px" class="label label-default"><?=  $calendar['tarih']; ?></span></a>
-                                                                        <a href="#"><span style="padding: 5px; font-size: 14px" class="label label-success"><?=  $calendar['baslangi'];  ?></span></a>
+                                                                        <a href="#"><span style="padding: 5px; font-size: 14px" class="label label-success"><?=  $calendar['baslangic'];  ?></span></a>
                                                                         <a href="#"><span style="padding: 5px; font-size: 14px;" class="label label-primary"><?= $calendar['bitis']; ?></span></a>
                                                                         <br>
                                                                         <h4 style="margin-top: 10px" class="mail-item-title"><a href="mail-view.html" class="title-color"><?= $cours->title; ?></a></h4>

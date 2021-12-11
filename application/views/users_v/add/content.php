@@ -46,6 +46,19 @@
                     </div>
 
                     <div class="form-group">
+                        <label>Girişim Seçin</label>
+                        <select name="girisim_category_id" class="form-control">
+
+                            <?php foreach($girisim_category as $grs_category) { ?>
+                                <option value="<?php echo $grs_category->id; ?>"><?php echo $grs_category->title; ?></option>
+                            <?php } ?>
+                        </select>
+                        <?php if(isset($form_error)){ ?>
+                            <small class="pull-right input-form-error"> <?php echo form_error("user_role"); ?></small>
+                        <?php } ?>
+                    </div>
+
+                    <div class="form-group">
                         <label>Şifre</label>
                         <input class="form-control" type="password" placeholder="Şifre" name="password">
                         <?php if(isset($form_error)){ ?>

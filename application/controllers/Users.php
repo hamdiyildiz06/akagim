@@ -13,6 +13,7 @@ class Users extends HY_Controller
 
         $this->load->model("user_model");
         $this->load->model("user_role_model");
+        $this->load->model("girisim_category_model");
 
         if(!get_active_user()){
             redirect(base_url("login"));
@@ -26,7 +27,9 @@ class Users extends HY_Controller
 
         $user = get_active_user();
 
-        if(isAdmin()){
+
+
+        if($user->user_role_id == 1){
 
             $where = array();
 
@@ -37,6 +40,8 @@ class Users extends HY_Controller
             );
 
         }
+
+
 
         /** Tablodan Verilerin Getirilmesi.. */
         $items = $this->user_model->get_all(
@@ -52,8 +57,29 @@ class Users extends HY_Controller
     }
 
     public function new_form(){
-
         $viewData = new stdClass();
+
+        $user = get_active_user();
+        if ($user->user_role_id != 1){
+            $alert = array(
+                "title" => "İşlem Başarısız",
+                "text" => "Bu İşlem için yetkiniz yok",
+                "type"  => "error"
+            );
+
+            $this->session->set_flashdata("alert", $alert);
+            redirect(base_url("program_info"));
+            die();
+        }
+
+        $viewData->girisim_category = $this->girisim_category_model->get_all(
+            array(
+                "isActive" => 1
+            )
+        );
+
+
+
         $viewData->user_roles = $this->user_role_model->get_all(
             array(
                 "isActive" => 1
@@ -69,12 +95,27 @@ class Users extends HY_Controller
 
     public function save(){
 
+        $user = get_active_user();
+        if ($user->user_role_id != 1){
+            $alert = array(
+                "title" => "İşlem Başarısız",
+                "text" => "Bu İşlem için yetkiniz yok",
+                "type"  => "error"
+            );
+
+            $this->session->set_flashdata("alert", $alert);
+            redirect(base_url("program_info"));
+            die();
+        }
+
+
         $this->load->library("form_validation");
 
         // Kurallar yazilir..
         $this->form_validation->set_rules("user_name", "Kullanıcı Adı", "required|trim|is_unique[users.user_name]");
         $this->form_validation->set_rules("full_name", "Ad Soyad", "required|trim");
         $this->form_validation->set_rules("user_role_id", ",Kullanıcı Rolü", "required|trim");
+        $this->form_validation->set_rules("girisim_category_id", ",Girişim Categori", "required|trim");
         $this->form_validation->set_rules("email", "E-posta", "required|trim|valid_email|is_unique[users.email]");
         $this->form_validation->set_rules("password", "Şifre", "required|trim|min_length[6]|max_length[8]");
         $this->form_validation->set_rules("re_password", "Şifre Tekrar", "required|trim|min_length[4]|max_length[8]|matches[password]");
@@ -102,6 +143,7 @@ class Users extends HY_Controller
                     "email"         => $this->input->post("email"),
                     "password"      => md5($this->input->post("password")),
                     "user_role_id"  => $this->input->post("user_role_id"),
+                    "girisim_category_id"  => $this->input->post("girisim_category_id"),
                     "isActive"      => 1,
                     "createdAt"     => date("Y-m-d H:i:s")
                 )
@@ -154,6 +196,19 @@ class Users extends HY_Controller
 
         $viewData = new stdClass();
 
+        $user = get_active_user();
+        if (($user->user_role_id != 1) || $user->id == $id){
+            $alert = array(
+                "title" => "İşlem Başarısız",
+                "text" => "Bu İşlem için yetkiniz yok",
+                "type"  => "error"
+            );
+
+            $this->session->set_flashdata("alert", $alert);
+            redirect(base_url("program_info"));
+            die();
+        }
+
         /** Tablodan Verilerin Getirilmesi.. */
         $item = $this->user_model->get(
             array(
@@ -163,6 +218,12 @@ class Users extends HY_Controller
 
 
         $viewData->user_roles = $this->user_role_model->get_all(
+            array(
+                "isActive" => 1
+            )
+        );
+
+        $viewData->girisim_category = $this->girisim_category_model->get_all(
             array(
                 "isActive" => 1
             )
@@ -220,7 +281,7 @@ class Users extends HY_Controller
 
         $this->form_validation->set_rules("full_name", "Ad Soyad", "required|trim");
         $this->form_validation->set_rules("user_role_id", "Kullanıcı Rolü", "required|trim");
-
+        $this->form_validation->set_rules("girisim_category_id", ",Girişim Categori", "required|trim");
 
         $this->form_validation->set_message(
             array(
@@ -247,11 +308,12 @@ class Users extends HY_Controller
                 if($image_80x80){
                     delete_picture("user_model" , $id, "80x80", $oldUser->img_url);
                     $data = array(
-                        "user_name"     => $this->input->post("user_name"),
-                        "full_name"     => $this->input->post("full_name"),
-                        "email"         => $this->input->post("email"),
-                        "user_role_id"  => $this->input->post("user_role_id"),
-                        "img_url"       => $file_name,
+                        "user_name"             => $this->input->post("user_name"),
+                        "full_name"             => $this->input->post("full_name"),
+                        "email"                 => $this->input->post("email"),
+                        "user_role_id"          => $this->input->post("user_role_id"),
+                        "girisim_category_id"   => $this->input->post("girisim_category_id"),
+                        "img_url"               => $file_name,
                     );
 
                 } else {
@@ -273,10 +335,11 @@ class Users extends HY_Controller
             } else {
 
                 $data =array(
-                    "user_name"     => $this->input->post("user_name"),
-                    "full_name"     => $this->input->post("full_name"),
-                    "email"         => $this->input->post("email"),
-                    "user_role_id"  => $this->input->post("user_role_id"),
+                    "user_name"             => $this->input->post("user_name"),
+                    "full_name"             => $this->input->post("full_name"),
+                    "email"                 => $this->input->post("email"),
+                    "user_role_id"          => $this->input->post("user_role_id"),
+                    "girisim_category_id"   => $this->input->post("girisim_category_id"),
                 );
 
             }
@@ -328,6 +391,12 @@ class Users extends HY_Controller
                 )
             );
 
+            $viewData->girisim_category = $this->girisim_category_model->get_all(
+                array(
+                    "isActive" => 1
+                )
+            );
+
             $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
         }
 
@@ -336,6 +405,21 @@ class Users extends HY_Controller
     public function profil_form($id){
 
         $viewData = new stdClass();
+
+        $user = get_active_user();
+        if (($user->user_role_id != 1) && $user->id != $id){
+            $alert = array(
+                "title" => "İşlem Başarısız",
+                "text" => "Bu İşlem için yetkiniz yok",
+                "type"  => "error"
+            );
+
+            $this->session->set_flashdata("alert", $alert);
+            redirect(base_url("program_info"));
+            die();
+        }
+
+
 
         /** Tablodan Verilerin Getirilmesi.. */
         $item = $this->user_model->get(

@@ -47,30 +47,34 @@
                         <?php } ?>
                     </div>
 
-                    <div class="form-group">
-                        <label>Uzmanlık Alanlarınız ( <small style="color: red">Uzmanlık Alanlarınızı ( , )'ile ayırarak giriniz</small> )</label>
-                        <input class="form-control" type="text" placeholder="Uzmanlık Alanlarınızı ( , )'ile ayırarak giriniz" name="profession" value="<?php echo isset($form_error) ? set_value("profession") : $item->profession; ?>">
-                        <?php if(isset($form_error)){ ?>
-                            <small class="pull-right input-form-error"> <?php echo form_error("profession"); ?></small>
-                        <?php } ?>
-                    </div>
+                    <?php if (get_active_user()->user_role_id == 2 || get_active_user()->user_role_id == 1 ){ ?>
+                        <div class="form-group">
+                            <label>Uzmanlık Alanlarınız ( <small style="color: red">Uzmanlık Alanlarınızı ( , )'ile ayırarak giriniz</small> )</label>
+                            <input class="form-control" type="text" placeholder="Uzmanlık Alanlarınızı ( , )'ile ayırarak giriniz" name="profession" value="<?php echo isset($form_error) ? set_value("profession") : $item->profession; ?>">
+                            <?php if(isset($form_error)){ ?>
+                                <small class="pull-right input-form-error"> <?php echo form_error("profession"); ?></small>
+                            <?php } ?>
+                        </div>
+                    <?php } ?>
 
-                    <div class="form-group">
-                        <label>Girişimin Konusu</label>
-                        <input class="form-control" type="text" placeholder="Girişimin Konusu" name="topic" value="<?php echo isset($form_error) ? set_value("topic") : $item->topic; ?>">
-                        <?php if(isset($form_error)){ ?>
-                            <small class="pull-right input-form-error"> <?php echo form_error("topic"); ?></small>
-                        <?php } ?>
-                    </div>
+                    <?php if (get_active_user()->user_role_id == 3 || get_active_user()->user_role_id == 1 ){ ?>
+                        <div class="form-group">
+                            <label>Girişimin Adı</label>
+                            <input class="form-control" type="text" placeholder="Girişimin Adı" name="topic_name" value="<?php echo isset($form_error) ? set_value("topic_name") : $item->topic_name; ?>">
+                            <?php if(isset($form_error)){ ?>
+                                <small class="pull-right input-form-error"> <?php echo form_error("topic_name"); ?></small>
+                            <?php } ?>
+                        </div>
 
-                    <div class="form-group">
-                        <label>Girişimin Adı</label>
-                        <input class="form-control" type="text" placeholder="Girişimin Adı" name="topic_name" value="<?php echo isset($form_error) ? set_value("topic_name") : $item->topic_name; ?>">
-                        <?php if(isset($form_error)){ ?>
-                            <small class="pull-right input-form-error"> <?php echo form_error("topic_name"); ?></small>
-                        <?php } ?>
-                    </div>
+                        <div class="form-group">
+                            <label>Girişimin Konusu</label>
+                            <input class="form-control" type="text" placeholder="Girişimin Konusu" name="topic" value="<?php echo isset($form_error) ? set_value("topic") : $item->topic; ?>">
+                            <?php if(isset($form_error)){ ?>
+                                <small class="pull-right input-form-error"> <?php echo form_error("topic"); ?></small>
+                            <?php } ?>
+                        </div>
 
+                    <?php } ?>
                     <div class="form-group">
                         <label>Hakkımda</label>
                         <textarea name="description" class="m-0" data-plugin="summernote" data-options="{height: 250}"><?php echo $item->description; ?></textarea>

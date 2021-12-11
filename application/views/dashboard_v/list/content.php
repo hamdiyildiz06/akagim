@@ -1,4 +1,6 @@
-<?php $this->load->view ('dashboard_v/list/fullcalendar-custom');  ?>
+<?php $this->load->view ('dashboard_v/list/fullcalendar-custom');
+//print_r(get_active_user());
+?>
 
 <div class="row">
     <div class="col-md-12">
@@ -7,6 +9,9 @@
                 <span style="color:white; text-decoration:none;">
                     Toplantı Oluşturmak için Aşağıdaki Boş Takvim Alanlarını Tıklayabilirsiniz ...
                 </span>
+                <?php if(get_active_user()->user_role_id == 1) { ?>
+                    <a href="<?php echo base_url("dashboard/show"); ?>" class="btn btn-primary btn-xs pull-right"> <i class="fa fa-plus"></i> Detaylar</a>
+                <?php } ?>
             </div>
         </div>
     </div>
@@ -154,7 +159,7 @@
 
                     <div class="form-group location" style="display: none">
                         <label for="end_time">Toplantı Yeri</label>
-                        <input name="toplanti_yeri" id="toplantiYeri" type="text" id="listStart" class="form-control"  placeholder="Toplantı Yeri" >
+                        <input name="toplanti_yeri" id="toplantiYeri" type="text" class="form-control"  placeholder="Toplantı Yeri" >
                     </div>
 
                     <div class="form-group">

@@ -2,7 +2,7 @@
     <div class="col-md-12">
         <h4 class="m-b-lg">
             Menti Listesi
-            <?php if(isAdmin()) { ?>
+            <?php if(get_active_user()->user_role_id == 1) { ?>
                 <a href="<?php echo base_url("menti/list"); ?>" class="btn btn-outline btn-primary btn-xs pull-right"> <i class="fa fa-plus"></i> Menti Listesi</a>
             <?php } ?>
         </h4>
@@ -35,8 +35,7 @@
                                                                 <h4><strong><?= $item->full_name; ?></strong></h4>
                                                                 <p><?= $item->unvan; ?></p>
                                                                 <p>
-                                                                    <a href="<?php echo base_url("menti/courses/{$item->id}"); ?>" class="btn btn-primary" role="button">Toplantılar</a>
-                                                                    <a href="<?php echo base_url("menti/about/{$item->id}"); ?>" class="btn btn-default" role="button">Profil</a>
+                                                                    <a href="<?php echo base_url("menti/about/{$item->id}"); ?>" class="btn btn-primary" role="button">Profil</a>
                                                                 </p>
                                                             </div>
                                                         </div>
