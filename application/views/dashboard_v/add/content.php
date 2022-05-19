@@ -75,7 +75,7 @@
                                 <div id="control-demo-6">
                                     <select name="toplanti_turu" id="toplantiTuru" class="form-control toplanti">
                                         <option value="zoom">Zoom</option>
-                                        <option value="ozel">Özel</option>
+                                        <option value="ozel">Akagim</option>
                                     </select>
                                 </div>
                             </div>
@@ -121,7 +121,7 @@
 
         $('.hamdi').timepicker({
             timeFormat: 'HH:mm',
-            interval: 30,
+            interval: 15,
             minTime: '00:00',
             maxTime: '23:59',
             defaultTime: '11',
@@ -130,7 +130,6 @@
             dropdown: true,
             scrollbar: true
         });
-
     });
 </script>
 

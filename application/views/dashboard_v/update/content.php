@@ -7,7 +7,7 @@
     <div class="col-md-8 col-md-offset-2">
         <div class="widget">
             <div class="widget-body">
-                <form action="<?php echo base_url("dashboard/update/$item->id"); ?>" method="post">
+                <form action="<?php echo base_url("dashboard/updated/$item->id"); ?>" method="post">
 
                     <div class="form-group col-md-12">
                         <label for="control-demo-6">Mentor</label>
@@ -15,7 +15,7 @@
                             <select name="teacher_id" id="teacher_id" class="form-control ">
                                 <?php foreach ($teachers as $teacher): ?>
                                     <option
-                                        <?= $item->teacher_id == $teacher->id ? 'selected' : "null" ?>
+                                            <?= $item->teacher_id == $teacher->id ? 'selected' : "null" ?>
                                             value="<?= $teacher->id ?>"> <?= $teacher->full_name ?>
                                     </option>
                                 <?php endforeach; ?>
@@ -30,7 +30,7 @@
                                 <option value="0">Seçim Yapınız</option>
                                 <?php foreach ($students as $student): ?>
                                     <option
-                                        <?= $item->student_id == $student->id ? 'selected' : "null" ?>
+                                            <?= $item->student_id == $student->id ? 'selected' : "null" ?>
                                             value="<?= $student->id ?>"> <?= $student->full_name ?>
                                     </option>
                                 <?php endforeach; ?>
@@ -57,15 +57,14 @@
                         </div>
                     </div>
 
-
                     <div class="row">
                         <?php $calendar = get_watch_list($item->start_event,$item->end_event)  ?>
+                        <?= $calendar['tarih']; ?>
                         <div class="col-md-4">
                             <label for="datetimepicker1">Başlangıç Tarihi</label>
-                            <input type="hidden" value="<?= $calendar['tarih']; ?>" name="event_date" id="datetimepicker1" data-plugin="datetimepicker" data-options="{inline: true, viewMode: 'days', format : 'YYYY-MM-DD'}" />
+                            <input type="hidden" value="<?= $calendar['tarih']; ?>" name="event_date" id="datetimepicker1" data-plugin="datetimepicker" data-options="{inline: true, viewMode: 'days', format : 'DD-MM-YYYY'}" />
                         </div><!-- END column -->
                         <div class="col-md-8">
-
 
                             <div class="form-group col-md-6">
                                 <label for="start_time">Başlangıç saati</label>
@@ -82,7 +81,7 @@
                                 <div id="control-demo-6">
                                     <select name="toplanti_turu" id="toplantiTuru" class="form-control toplanti">
                                         <option <?= $item->toplantiTuru == "zoom" ? 'selected' : null; ?> value="zoom">Zoom</option>
-                                        <option <?= $item->toplantiTuru == "ozel" ? 'selected' : null; ?> value="ozel">Özel</option>
+                                        <option <?= $item->toplantiTuru == "ozel" ? 'selected' : null; ?> value="ozel">Akagim</option>
                                     </select>
                                 </div>
                             </div>

@@ -33,7 +33,7 @@
                                                             <img style="width: 50%" src="<?= get_picture( "users_v", $item->img_url, '80x80'); ?>"  alt="sender photo">
                                                             <div class="caption text-center">
                                                                 <h4><strong><?= $item->full_name; ?></strong></h4>
-                                                                <p><?= $item->unvan; ?></p>
+                                                                <p><?= isset($item->unvan) ? $item->unvan : "-"; ?></p>
                                                                 <p>
                                                                     <a href="<?php echo base_url("menti/about/{$item->id}"); ?>" class="btn btn-primary" role="button">Profil</a>
                                                                 </p>

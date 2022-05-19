@@ -25,7 +25,7 @@
 
                     <div class="form-group">
                         <label>Kullanıcı Adı</label>
-                        <input class="form-control" placeholder="Kullanıcı Adı" name="user_name" value="<?php echo isset($form_error) ? set_value("user_name") : $item->user_name ; ?>">
+                        <input class="form-control" placeholder="Kullanıcı Adı" name="user_name" value="<?php echo isset($form_error) ? set_value("user_name") : $item->user_name ; ?>" <?= get_active_user()->user_role_id != 1 ? 'disabled' : null ?> >
                         <?php if(isset($form_error)){ ?>
                             <small class="pull-right input-form-error"> <?php echo form_error("user_name"); ?></small>
                         <?php } ?>
@@ -41,13 +41,21 @@
 
                     <div class="form-group">
                         <label>E-posta Adresi</label>
-                        <input class="form-control" type="email" placeholder="E-posta Adresi" name="email" value="<?php echo isset($form_error) ? set_value("email") : $item->email; ?>" disabled >
+                        <input class="form-control" type="email" placeholder="E-posta Adresi" name="email" value="<?php echo isset($form_error) ? set_value("email") : $item->email; ?>" <?= get_active_user()->user_role_id != 1 ? 'disabled' : null ?> >
                         <?php if(isset($form_error)){ ?>
                             <small class="pull-right input-form-error"> <?php echo form_error("email"); ?></small>
                         <?php } ?>
                     </div>
 
-                    <?php if (get_active_user()->user_role_id == 2 || get_active_user()->user_role_id == 1 ){ ?>
+                    <div class="form-group">
+                        <label>Ünvan</label>
+                        <input class="form-control" placeholder="Ünvan Giriniz" name="unvan" value="<?php echo isset($form_error) ? set_value("unvan") : $item->unvan ; ?>" <?= get_active_user()->user_role_id != 1 ? 'disabled' : null ?> >
+                        <?php if(isset($form_error)){ ?>
+                            <small class="pull-right input-form-error"> <?php echo form_error("unvan"); ?></small>
+                        <?php } ?>
+                    </div>
+
+                    <?php if ((get_active_user()->user_role_id == 2 && $item->user_role_id == 2) || (get_active_user()->user_role_id == 1 && $item->user_role_id == 2) ){ ?>
                         <div class="form-group">
                             <label>Uzmanlık Alanlarınız ( <small style="color: red">Uzmanlık Alanlarınızı ( , )'ile ayırarak giriniz</small> )</label>
                             <input class="form-control" type="text" placeholder="Uzmanlık Alanlarınızı ( , )'ile ayırarak giriniz" name="profession" value="<?php echo isset($form_error) ? set_value("profession") : $item->profession; ?>">
@@ -57,12 +65,27 @@
                         </div>
                     <?php } ?>
 
-                    <?php if (get_active_user()->user_role_id == 3 || get_active_user()->user_role_id == 1 ){ ?>
+                    <?php if ((get_active_user()->user_role_id == 3 && $item->user_role_id == 3) || (get_active_user()->user_role_id == 1 && $item->user_role_id == 3) ){ ?>
+<!--                        <div class="form-group">-->
+<!--                            <label>Girişimin Adı</label>-->
+<!--                            <input class="form-control" type="text" placeholder="Girişimin Adı" name="topic_name" value="--><?php //echo isset($form_error) ? set_value("topic_name") : $item->topic_name; ?><!--">-->
+<!--                            --><?php //if(isset($form_error)){ ?>
+<!--                                <small class="pull-right input-form-error"> --><?php //echo form_error("topic_name"); ?><!--</small>-->
+<!--                            --><?php //} ?>
+<!--                        </div>-->
+
+
                         <div class="form-group">
-                            <label>Girişimin Adı</label>
-                            <input class="form-control" type="text" placeholder="Girişimin Adı" name="topic_name" value="<?php echo isset($form_error) ? set_value("topic_name") : $item->topic_name; ?>">
+                            <label>Girişim Seçin</label>
+                            <select name="girisim_category_id" class="form-control" <?= get_active_user()->user_role_id != 1 ? 'disabled' : null ?>>
+                                <?php foreach($girisim_category as $grs_category) { ?>
+                                    <option
+                                        <?= $item->girisim_category_id == $grs_category->id ? "selected" : null; ?>
+                                            value="<?php echo $grs_category->id; ?>"><?php echo $grs_category->title; ?></option>
+                                <?php } ?>
+                            </select>
                             <?php if(isset($form_error)){ ?>
-                                <small class="pull-right input-form-error"> <?php echo form_error("topic_name"); ?></small>
+                                <small class="pull-right input-form-error"> <?php echo form_error("girisim_category_id"); ?></small>
                             <?php } ?>
                         </div>
 
@@ -109,6 +132,7 @@
                         <?php } ?>
                     </div>
 
+                    <?php if (get_active_user()->user_role_id == 1 || get_active_user()->user_role_id == 2 ): ?>
                     <div class="form-group">
                         <label>Zoom Link</label>
                         <input class="form-control" type="text" placeholder="Zoom Link" name="zoom" value="<?php echo isset($form_error) ? set_value("zoom") : $item->zoom; ?>">
@@ -116,9 +140,10 @@
                             <small class="pull-right input-form-error"> <?php echo form_error("zoom"); ?></small>
                         <?php } ?>
                     </div>
+                    <?php endif; ?>
 
 
-
+                    <?php if (get_active_user()->user_role_id == 1): ?>
                     <div class="form-group">
                         <label>Kullanıcı Yetkisi</label>
                         <select name="user_role_id" class="form-control">
@@ -132,6 +157,7 @@
                             <small class="pull-right input-form-error"> <?php echo form_error("user_role"); ?></small>
                         <?php } ?>
                     </div>
+                    <?php endif; ?>
 
                     <button type="submit" class="btn btn-primary btn-md btn-outline">Güncelle</button>
                     <a href="<?php echo base_url("users"); ?>" class="btn btn-md btn-danger btn-outline">İptal</a>

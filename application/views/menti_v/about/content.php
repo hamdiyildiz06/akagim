@@ -14,24 +14,20 @@
             <div class="tab-content">
 
                 <div role="tabpanel" id="profile-about" class="tab-pane in active fade" >
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <?php if(empty($item->description)) { ?>
+                    <div class="row">
+                        <?php if(empty($item->description)) { ?>
 
-                                    <div class="alert alert-info text-center col-md-7"  style="margin-top: 30px">
-                                        <p> Burada herhangi bir Bilgilendirme bulunmamaktadır. </p>
-                                    </div>
-
-                                <?php }else{ ?>
-
-                                    <div>
-                                        <?=  $item->description; ?>
-                                    </div>
-
-                                <?php }?>
+                            <div style="padding: 30px">
+                                <p class="alert alert-info text-center"> Burada herhangi bir Bilgilendirme bulunmamaktadır. </p>
                             </div>
-                        </div>
+
+                        <?php }else{ ?>
+
+                            <div style="padding: 30px">
+                                <?= $item->description; ?>
+                            </div>
+
+                        <?php }?>
                     </div>
                 </div><!-- hakkımda -->
 

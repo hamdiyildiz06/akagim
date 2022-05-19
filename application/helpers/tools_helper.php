@@ -25,7 +25,6 @@ function get_active_user(){
         return $user;
     else
         return false;
-
 }
 
 function isAdmin(){
@@ -209,17 +208,13 @@ function get_picture($path = "", $picture = "", $resolution = "50x50"){
             $picture = base_url("uploads/$path/$resolution/$picture");
         } else {
             $picture = base_url("assets/assets/images/default_image.png");
-
         }
 
     } else {
-
         $picture = base_url("assets/assets/images/default_image.png");
-
     }
 
     return $picture;
-
 }
 
 function delete_picture($model,$id,$resolution,$img_url = ""){
@@ -316,3 +311,32 @@ function get_user_info($id, $topic = false){
     else
         return false;
 }
+
+function get_notification($calendar_id,$student_id,$teacher_id,$status,$isActive){
+    $t = get_instance();
+    $insert =  $t->notification_model->add(
+        array(
+            "calendar_id"  =>$calendar_id,
+            "student_id"   =>$student_id,
+            "teacher_id"   =>$teacher_id,
+            "status"       =>$status,
+            "isActive"     =>$isActive,
+        )
+    );
+}
+
+function get_user_roles_title($id){
+    $t = get_instance();
+    $t->load->model("user_role_model");
+
+    $user_roles = $t->user_role_model->get(
+        [
+            "isActive" => 1,
+            "id" => $id
+        ]
+    );
+
+    return $user_roles->title;
+}
+
+

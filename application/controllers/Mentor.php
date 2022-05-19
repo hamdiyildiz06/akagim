@@ -619,6 +619,7 @@ class Mentor extends HY_Controller
 
         $this->load->model("course_model");
         $this->load->model('fullcalendar_model');
+        $this->load->model('girisim_category_model');
 
         /** Tablodan Verilerin Getirilmesi.. */
 //        $viewData->courses = $this->course_model->get_all(
@@ -639,7 +640,10 @@ class Mentor extends HY_Controller
 
 
 
+
+
         if ($viewData->event->status == 1){
+
             $viewData->mentor = $this->user_model->get(
                 array(
                     "id"    => $viewData->event->teacher_id,
@@ -658,6 +662,15 @@ class Mentor extends HY_Controller
                     "student_id" => 0,
                 )
             );
+
+            $viewData->girisim_category = $this->girisim_category_model->get(
+                array(
+                    "id" => $viewData->menti->girisim_category_id,
+                    "isActive" => 1
+                )
+            );
+
+
         }
 
         if ($viewData->event->status == 2){
@@ -678,6 +691,13 @@ class Mentor extends HY_Controller
                 array(
                     "id" => $viewData->event->teacher_id,
                     "student_id" => 0,
+                )
+            );
+
+            $viewData->girisim_category = $this->girisim_category_model->get(
+                array(
+                    "id" => $viewData->menti->girisim_category_id,
+                    "isActive" => 1
                 )
             );
         }
@@ -702,6 +722,13 @@ class Mentor extends HY_Controller
                     "student_id" => 0,
                 )
             );
+
+            $viewData->girisim_category = $this->girisim_category_model->get(
+                array(
+                    "id" => $viewData->menti->girisim_category_id,
+                    "isActive" => 1
+                )
+            );
         }
 
         if ($viewData->event->status == 4){
@@ -722,6 +749,13 @@ class Mentor extends HY_Controller
                 array(
                     "id" => $viewData->event->teacher_id,
                     "student_id" => 0,
+                )
+            );
+
+            $viewData->girisim_category = $this->girisim_category_model->get(
+                array(
+                    "id" => $viewData->menti->girisim_category_id,
+                    "isActive" => 1
                 )
             );
         }

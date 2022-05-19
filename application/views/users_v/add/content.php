@@ -81,3 +81,23 @@
         </div><!-- .widget -->
     </div><!-- END column -->
 </div>
+
+<script>
+    $(document).ready(function(){
+
+        if ($('.toplanti').val() == "zoom"){
+            $('.location').css("display","none");
+        }
+
+        $('.toplanti').on('change', function() {
+
+            if (this.value == 'ozel'){
+                // alert(this.value);
+                $('.location').css("display","block");
+            }else{
+                // alert(this.value);
+                $('.location').css("display","none");
+            }
+        });
+    });
+</script>

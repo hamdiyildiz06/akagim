@@ -24,24 +24,15 @@ class Users extends HY_Controller
     public function index(){
 
         $viewData = new stdClass();
-
         $user = get_active_user();
 
-
-
         if($user->user_role_id == 1){
-
             $where = array();
-
         } else {
-
             $where = array(
                 "id"    => $user->id
             );
-
         }
-
-
 
         /** Tablodan Verilerin Getirilmesi.. */
         $items = $this->user_model->get_all(
@@ -435,6 +426,12 @@ class Users extends HY_Controller
             )
         );
 
+        $viewData->girisim_category = $this->girisim_category_model->get_all(
+            array(
+                "isActive" => 1
+            )
+        );
+
         /** View'e gönderilecek Değişkenlerin Set Edilmesi.. */
         $viewData->viewFolder = $this->viewFolder;
         $viewData->subViewFolder = "profil";
@@ -449,18 +446,28 @@ class Users extends HY_Controller
 
         $this->load->library("form_validation");
 
+
+//        print_r($_POST);
+//        echo "<br>";
+//        print_r(get_active_user());
+//        die();
+
         $oldUser = $this->user_model->get(
             array(
                 "id"    => $id
             )
         );
 
-        if($oldUser->user_name != $this->input->post("user_name")){
+        if($oldUser->user_name != $this->input->post("user_name") && get_active_user()->user_role_id == 1 ){
             $this->form_validation->set_rules("user_name", "Kullanıcı Adı", "required|trim|is_unique[users.user_name]");
         }
 
+
+        if($oldUser->email != $this->input->post("email")  && get_active_user()->user_role_id == 1 ){
+            $this->form_validation->set_rules("email", "E-posta", "required|trim|valid_email|is_unique[users.email]");
+        }
+
         $this->form_validation->set_rules("full_name", "Ad Soyad", "required|trim");
-        $this->form_validation->set_rules("user_role_id", "Kullanıcı Rolü", "required|trim");
         $this->form_validation->set_rules("linkedin", "linkedin", "trim");
         $this->form_validation->set_rules("facebook", "facebook", "trim");
         $this->form_validation->set_rules("instagram", "instagram", "trim");
@@ -491,9 +498,12 @@ class Users extends HY_Controller
                 if($image_80x80){
                     delete_picture("user_model" , $id, "80x80", $oldUser->img_url);
                     $data = array(
-                        "user_name"     => $this->input->post("user_name"),
+                        "email"         => (get_active_user()->user_role_id == 1) ? $this->input->post("email") : get_active_user()->email,
+                        "unvan"         => (get_active_user()->user_role_id == 1) ? $this->input->post("unvan") : get_active_user()->unvan,
+                        "user_name"     => (get_active_user()->user_role_id == 1) ? $this->input->post("user_name") : get_active_user()->user_name,
+                        "user_role_id"  => (get_active_user()->user_role_id == 1) ? $this->input->post("user_role_id") : get_active_user()->user_role_id,
+
                         "full_name"     => $this->input->post("full_name"),
-                        "user_role_id"  => $this->input->post("user_role_id"),
                         "img_url"       => $file_name,
                         "profession"    => $this->input->post("profession"),
                         "topic"         => $this->input->post("topic"),
@@ -513,6 +523,8 @@ class Users extends HY_Controller
                         "type" => "error"
                     );
 
+                    get_active_user()->description = $this->input->post("description");
+
                     $this->session->set_flashdata("alert", $alert);
 
                     redirect(base_url("user/update_form/$id"));
@@ -524,9 +536,12 @@ class Users extends HY_Controller
             } else {
 
                 $data =array(
-                    "user_name"     => $this->input->post("user_name"),
+                    "email"         => (get_active_user()->user_role_id == 1) ? $this->input->post("email") : get_active_user()->email,
+                    "unvan"         => (get_active_user()->user_role_id == 1) ? $this->input->post("unvan") : get_active_user()->unvan,
+                    "user_name"     => (get_active_user()->user_role_id == 1) ? $this->input->post("user_name") : get_active_user()->user_name,
+                    "user_role_id"  => (get_active_user()->user_role_id == 1) ? $this->input->post("user_role_id") : get_active_user()->user_role_id,
+
                     "full_name"     => $this->input->post("full_name"),
-                    "user_role_id"  => $this->input->post("user_role_id"),
                     "profession"    => $this->input->post("profession"),
                     "description"   => $this->input->post("description"),
                     "topic"         => $this->input->post("topic"),
@@ -543,10 +558,10 @@ class Users extends HY_Controller
 
             // TODO Alert sistemi eklenecek...
             if($update){
-
+                get_active_user()->description = $this->input->post("description");
                 $alert = array(
                     "title" => "İşlem Başarılı",
-                    "text" => "Kayıt başarılı bir şekilde güncellendi",
+                    "text"  => "Kayıt başarılı bir şekilde güncellendi",
                     "type"  => "success"
                 );
 
@@ -554,7 +569,7 @@ class Users extends HY_Controller
 
                 $alert = array(
                     "title" => "İşlem Başarısız",
-                    "text" => "Kayıt Güncelleme sırasında bir problem oluştu",
+                    "text"  => "Kayıt Güncelleme sırasında bir problem oluştu",
                     "type"  => "error"
                 );
             }

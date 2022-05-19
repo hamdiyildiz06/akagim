@@ -61,7 +61,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label>Kullanıcı Yetkisi</label>
+                        <label>Girişim Seçin</label>
                         <select name="girisim_category_id" class="form-control">
                             <?php foreach($girisim_category as $grs_category) { ?>
                                 <option

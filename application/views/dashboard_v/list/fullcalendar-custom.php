@@ -123,7 +123,6 @@
                     {
                         alert("dropdown işlemi yapıldı");
                         calendar.fullCalendar('refetchEvents');
-
                     }
                 });
 

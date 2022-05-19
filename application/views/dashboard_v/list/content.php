@@ -21,8 +21,8 @@
     <div class="col-md-4">
         <div class="panel panel-primary">
             <div class="panel-heading text-center">
-                <a href="student?opt=mgst" style="color:white; text-decoration:none;">
-                    Toplam Girişimci : <span class="badge"><?php echo $countTotalStudent; ?></span>
+                <a href="<?= base_url("girisim_categories"); ?>" style="color:white; text-decoration:none; ">
+                    Toplam Girişimci : <span style="font-weight: bold; font-size: 18px" class="badge"><?php echo $totalGirisim; ?></span>
                 </a>
             </div>
         </div>
@@ -31,8 +31,8 @@
     <div class="col-md-4">
         <div class="panel panel-primary text-center">
             <div class="panel-heading">
-                <a href="teacher" style="color:white; text-decoration:none;">
-                    Toplam Mentor : <span class="badge"><?php echo $countTotalTeacher; ?></span>
+                <a href="<?= base_url("mentor"); ?>" style="color:white; text-decoration:none;">
+                    Toplam Mentor : <span style="font-weight: bold; font-size: 18px" class="badge"><?php echo $totalMentor; ?></span>
                 </a>
             </div>
         </div>
@@ -41,8 +41,8 @@
     <div class="col-md-4">
         <div class="panel panel-primary">
             <div class="panel-heading text-center">
-                <a href="classes" style="color:white; text-decoration:none;">
-                    Toplam Girişim : <span class="badge"><?php echo $countTotalClasses; ?></span>
+                <a href="<?= base_url("menti"); ?>" style="color:white; text-decoration:none;">
+                    Toplam Girişim : <span style="font-weight: bold; font-size: 18px" class="badge"><?php echo $totalMenti; ?></span>
                 </a>
 
             </div>
@@ -152,7 +152,7 @@
                         <div id="control-demo-6">
                             <select name="toplanti_turu" id="toplantiTuru" class="form-control toplanti">
                                 <option value="zoom">Zoom</option>
-                                <option value="ozel">Özel</option>
+                                <option value="ozel">Akagim</option>
                             </select>
                         </div>
                     </div>
@@ -243,9 +243,14 @@
                         $('#calendar').fullCalendar('refetchEvents');
                         $("#insert").modal('toggle');
 
+
                     }
                 },
                 error:function(){
+
+
+
+
                     alert("insert kısmında bir hata var");
                 }
             });
@@ -254,7 +259,7 @@
 
         $('.hamdi').timepicker({
             timeFormat: 'HH:mm',
-            interval: 30,
+            interval: 15,
             minTime: '00:00',
             maxTime: '23:59',
             defaultTime: '11',

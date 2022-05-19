@@ -63,40 +63,49 @@
                     </li>
                 <?php } ?>
 
-
+                <?php  if ((strlen(get_active_user()->description) > 20 && get_active_user()->user_role_id == 3) || get_active_user()->user_role_id != 3 ){?>
                 <li>
                     <a href="<?php echo base_url("program_info"); ?>">
                         <i class="menu-icon zmdi zmdi-view-dashboard zmdi-hc-lg"></i>
                         <span class="menu-text">Program Bilgileri</span>
                     </a>
                 </li>
-
+                <?php } ?>
                 <?php
                     if (get_active_user()->user_role_id == 2){
                         $actifUrl = "mentor/about/".get_active_user()->id;
+                        $titleName = "Toplantılarım";
                     }else{
                         $actifUrl = "mentor";
+                        $titleName = "Mentorler";
                     }
                 ?>
+                <?php  if ((strlen(get_active_user()->description) > 20 && get_active_user()->user_role_id == 3) || get_active_user()->user_role_id != 3 ){?>
                 <li>
                     <a href="<?php echo base_url($actifUrl); ?>">
                         <i class="menu-icon zmdi zmdi-view-dashboard zmdi-hc-lg"></i>
-                        <span class="menu-text">Mentorler</span>
+                        <span class="menu-text"><?= $titleName ?></span>
                     </a>
                 </li>
+                <?php } ?>
+
                 <?php
                     if (get_active_user()->user_role_id == 3){
                         $actifUrl = "menti/about/".get_active_user()->id;
+                        $titleName = "Toplantılarım";
                     }else{
                         $actifUrl = "menti";
+                        $titleName = "Mentiler";
                     }
                 ?>
+                <?php  if ((strlen(get_active_user()->description) > 20 && get_active_user()->user_role_id == 3) || get_active_user()->user_role_id != 3 ){?>
                 <li>
                     <a href="<?php echo base_url($actifUrl); ?>">
                         <i class="menu-icon zmdi zmdi-view-dashboard zmdi-hc-lg"></i>
-                        <span class="menu-text">Mentiler</span>
+                        <span class="menu-text"><?= $titleName ?></span>
                     </a>
                 </li>
+                <?php } ?>
 
                 <?php if (isAllowedViewModule("girisim_categories")){ ?>
                     <li>
@@ -191,14 +200,14 @@
                     </li>
                 <?php } ?>
 
-
+                <?php  if ((strlen(get_active_user()->description) > 20 && get_active_user()->user_role_id == 3) || get_active_user()->user_role_id != 3 ){?>
                     <li>
                         <a target="_blank" href="https://www.akagim.com/">
                             <i class="menu-icon zmdi zmdi-view-web zmdi-hc-lg"></i>
                             <span class="menu-text">Siteye Git</span>
                         </a>
                     </li>
-
+                <?php  } ?>
             </ul><!-- .app-menu -->
         </div><!-- .menubar-scroll-inner -->
     </div><!-- .menubar-scroll -->

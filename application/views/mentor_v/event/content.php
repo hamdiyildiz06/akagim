@@ -18,7 +18,7 @@
                         <div class="media-body text-center" style=" padding: 0 0 20px 20px">
                             <h5 class="media-heading"><a href="javascript:void(0)" class="title-color"><?=  $calendar['tarih']; ?></a></h5>
                             <p> <?=  $calendar['baslangic'];  ?> - <?=  $calendar['bitis'];  ?> </p>
-                            <p class="media-meta"> <?= $event->toplantiTuru; ?> </p>
+                            <p class="media-meta"> <?= ($event->toplantiTuru == "zoom") ? "zoom" : "Akagim" ; ?> </p>
                             <?php if ($event->toplantiTuru == "ozel"):  ?>
                             <p class="media-meta"> <?= $event->toplantiYeri; ?> </p>
                             <?php endif;  ?>
@@ -28,20 +28,21 @@
 <!--                            <a  href="javascript:void(0);" type="button" class="btn rounded mw-md btn-warning">Rezerv Et</a>-->
 <!--                        </div>-->
                     </div>
-                    <?php if ($menti->topic_name): ?>
+
+                    <?php if ($menti->girisim_category_id): ?>
                     <hr class="widget-separator m-0">
                     <div class="text-center" style="padding: 20px 20px 20px 0">
-                        <p> <?= $menti->topic_name ?> </p>
+                        <p> <?= $girisim_category->title; ?> </p>
                     </div>
                     <?php endif; ?>
 
-                    <?php if (($event->toplantiTuru == "zoom") && ($mentor->id == get_active_user()->id) || ($menti->id == get_active_user()->id) || (get_active_user()->user_role_id == 1)): ?>
+                    <?php if (($event->toplantiTuru == 'zoom') && (($mentor->id == get_active_user()->id) || ($menti->id == get_active_user()->id) || (get_active_user()->user_role_id == 1))): ?>
                         <hr class="widget-separator m-0">
                         <div class="text-center" style="padding: 20px 20px 20px 0;">
                             <p class="text-justify-center">
-                                <a href="<?= $mentor->zoom; ?>">
+                                <a  href="<?= $mentor->zoom; ?>" target="_blank">
                                     <i class="m-r-lg fa fa-video-camera fa-3x fa-align-justify media-middle" aria-hidden="true"></i>
-                                    <?= $event->toplantiTuru ?> ' ile bağlanmaık için Tıklayınız
+                                    <?= $event->toplantiTuru ?> ' ile bağlanmak için tıklayınız
                                 </a>
                             </p>
                         </div>
@@ -93,15 +94,15 @@
         <div id="profile-tabs" class="nav-tabs-horizontal white m-b-lg">
             <!-- tabs list -->
             <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active"><a href="#profile-about" aria-controls="about" role="tab" data-toggle="tab">Hakkımda</a></li>
+                <li role="presentation" class="active"><a href="#profile-about" aria-controls="about" role="tab" data-toggle="tab">Randevu Detay</a></li>
             </ul><!-- .nav-tabs -->
 
             <!-- Tab panes -->
             <div class="tab-content">
                 <div role="tabpanel" id="profile-about" class="tab-pane in active fade" >
-                    <div class="container">
+
                         <div class="row">
-                            <div class="col-md-12">
+
                                 <?php if(empty($event->id)) { ?>
 
                                     <div class="alert alert-info text-center col-md-7"  style="margin-top: 30px">
@@ -111,7 +112,7 @@
                                 <?php }else{ ?>
 
                                     <div class="col-md-12 col-sm-12" style="padding: 20px">
-                                        <div class="user-card p-0 col-md-11">
+                                        <div class="user-card p-0 col-md-12">
                                             <div class="media white ">
 
                                                 <div class="media-left">
@@ -134,35 +135,37 @@
                                                 <div class="media-left text-center col-md-6" style="float: left; padding: 0 0 20px 20px">
                                                     <h5 class="media-heading"><a href="javascript:void(0)" class="title-color"><?=  $calendar['tarih']; ?></a></h5>
                                                     <p> <?=  $calendar['baslangic']; ?> - <?=  $calendar['bitis']; ?> </p>
-                                                    <small class="media-meta"> <?=  $available->toplantiTuru; ?> </small>
-                                                    <div class="media-body text-center" style="padding-top: 10px">
+                                                    <small class="media-meta"> <?= ($available->toplantiTuru == "zoom") ? "zoom" : "Akagim" ; ?> </small>
+                                                    <div class="media-body text-center" style="padding-top: 10px;">
                                                         <div class="text-center">
                                                             <form action="<?= base_url("mentor/rezerv/{$event->id}") ?>" method="post">
                                                                 <?php if ($event->isActive == '0'): ?>
-
                                                                     <a href="<?= base_url("mentor/rezerv/{$event->id}") ?>" type="submit" class="btn rounded btn-success"> REZERV ET</a>
+                                                                <p><small style="margin-top: 10px; display: block; color: red">Randevu işlemini tamamlamak için rezerv et Butonunu tıklayınız</small></p>
                                                                 <?php elseif($event->isActive == '1'): ?>
 
-                                                                    <a href="javascript:void(0);" type="button" class="btn rounded mw-md btn-info">BEKLEMEDE</a>
+                                                                        <a href="javascript:void(0);" type="button" class="btn rounded mw-md btn-info">ONAY BEKLEMEDE</a>
 
-                                                                    <?php if ((($event->isActive == '1') && ($event->teacher_id == get_active_user()->id)) || ( get_active_user()->user_role_id == 1) && ($event->isActive == '1') ): ?>
-                                                                        <a href="<?= base_url("mentor/rezerv/{$event->id}/2") ?>" type="submit" class="btn rounded btn-success"> ONAYLA </a>
-                                                                        <a href="<?= base_url("mentor/rezerv/{$event->id}/4") ?>" type="submit" class="btn rounded btn-danger"> İPTAL </a>
-                                                                    <?php endif; ?>
+                                                                        <?php if ((($event->isActive == '1') && ($event->teacher_id == get_active_user()->id)) || ( get_active_user()->user_role_id == 1) && ($event->isActive == '1') ): ?>
+                                                                            <a href="<?= base_url("mentor/rezerv/{$event->id}/2") ?>" type="submit" class="btn rounded btn-success"> ONAYLA </a>
+                                                                            <a href="<?= base_url("mentor/rezerv/{$event->id}/4") ?>" type="submit" class="btn rounded btn-danger"> İPTAL </a>
+                                                                        <?php endif; ?>
 
                                                                 <?php elseif($event->isActive == '3'): ?>
 
-                                                                    <a href="javascript:void(0);" type="button" class="btn rounded mw-md btn-default">GEÇMİŞ TOPLANTILAR</a>
+                                                                        <a href="javascript:void(0);" type="button" class="btn rounded mw-md btn-default">GEÇMİŞ TOPLANTILAR</a>
+
                                                                 <?php elseif($event->isActive == '4'): ?>
 
-                                                                    <a href="javascript:void(0);" type="button" class="btn rounded mw-md btn-default">İPTAL EDİLEN TOPLANTI</a>
+                                                                        <a href="javascript:void(0);" type="button" class="btn rounded mw-md btn-default">İPTAL EDİLEN TOPLANTI</a>
+
                                                                 <?php else: ?>
 
-                                                                    <a href="javascript:void(0);" type="button" class="btn rounded mw-md btn-info">ONAYLANDI</a>
-                                                                    <?php if ((($event->isActive == '2') && ($event->teacher_id == get_active_user()->id)) || ( get_active_user()->user_role_id == 1) && ($event->isActive == '2') ): ?>
-                                                                        <a href="<?= base_url("mentor/rezerv/{$event->id}/3") ?>" type="submit" class="btn rounded btn-dark"> BİTTİ </a>
-                                                                        <a href="<?= base_url("mentor/rezerv/{$event->id}/4") ?>" type="submit" class="btn rounded btn-danger"> İPTAL </a>
-                                                                    <?php endif; ?>
+                                                                        <a href="javascript:void(0);" type="button" class="btn rounded mw-md btn-info">ONAYLANDI</a>
+                                                                        <?php if ((($event->isActive == '2') && ($event->teacher_id == get_active_user()->id)) || ( get_active_user()->user_role_id == 1) && ($event->isActive == '2') ): ?>
+                                                                            <a href="<?= base_url("mentor/rezerv/{$event->id}/3") ?>" type="submit" class="btn rounded btn-dark"> BİTTİ </a>
+                                                                            <a href="<?= base_url("mentor/rezerv/{$event->id}/4") ?>" type="submit" class="btn rounded btn-danger"> İPTAL </a>
+                                                                        <?php endif; ?>
 
                                                                 <?php endif; ?>
                                                             </form>
@@ -200,9 +203,9 @@
                                     </div><!-- END column -->
 
                                 <?php }?>
-                            </div>
+
                         </div>
-                    </div>
+
                 </div> <!-- hakkımda -->
             </div><!-- .tab-content -->
         </div><!-- #profile-components -->

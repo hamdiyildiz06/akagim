@@ -18,6 +18,7 @@ class Menti extends HY_Controller
             redirect(base_url("login"));
         }
 
+
     }
 
     public function index(){

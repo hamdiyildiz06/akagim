@@ -21,6 +21,7 @@
                 <table class="table table-hover table-striped table-bordered content-container">
                     <thead>
                         <th class="w50">#id</th>
+                        <th>Ünvan</th>
                         <th>Kullanıcı Adı</th>
                         <th>Ad Soyad</th>
                         <th>E-posta</th>
@@ -33,6 +34,7 @@
 
                             <tr>
                                 <td class="w50 text-center">#<?php echo $item->id; ?></td>
+                                <td><?php echo get_user_roles_title($item->user_role_id); ?></td>
                                 <td><?php echo $item->user_name; ?></td>
                                 <td><?php echo $item->full_name; ?></td>
                                 <td class="text-center"><?php echo $item->email; ?></td>

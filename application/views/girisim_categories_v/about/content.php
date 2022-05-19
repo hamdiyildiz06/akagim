@@ -19,7 +19,7 @@
                                         <img style="width: 50%" src="<?= get_picture( "users_v", $menti->img_url, '80x80'); ?>"  alt="sender photo">
                                         <div class="caption text-center">
                                             <h4><strong><?= $menti->full_name; ?></strong></h4>
-                                            <p><?= $menti->unvan; ?></p>
+                                            <p><?= !empty($item->unvan) ? $item->unvan : "-"; ?></p>
                                             <p>
                                                 <a href="<?php echo base_url("menti/about/{$menti->id}"); ?>" class="btn btn-primary" role="button">Profil</a>
                                             </p>

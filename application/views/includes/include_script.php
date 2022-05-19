@@ -15,7 +15,12 @@
 <script src="<?php echo base_url("assets"); ?>/assets/js/app.js"></script>
 <!-- endbuild -->
 <script src="<?php echo base_url("assets"); ?>/libs/bower/moment/moment.js"></script>
+
+<script src="<?php echo base_url("assets"); ?>/assets/js/daterangepicker.min.js"></script>
+<script src="<?php echo base_url("assets"); ?>/assets/js/daterangepickertr.js"></script>
+
 <script src="<?php echo base_url("assets"); ?>/libs/bower/fullcalendar/dist/fullcalendar.min.js"></script>
+
 <script src="<?php echo base_url("assets"); ?>/assets/js/fullcalendar.js"></script>
 
 <script src="<?php echo base_url("assets"); ?>/assets/js/sweetalert2.all.js"></script>
