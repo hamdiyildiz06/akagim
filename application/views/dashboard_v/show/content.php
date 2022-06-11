@@ -72,7 +72,6 @@
                         <th>Tarih</th>
                         <th>başlangıç</th>
                         <th>Bitiş</th>
-                        <th>Durumu</th>
                         <th>İşlem</th>
                     </thead>
                     <tbody>
@@ -86,17 +85,6 @@
                                 <td><?php echo $calendar['tarih']; ?></td>
                                 <td><?php echo $calendar['baslangic']; ?></td>
                                 <td><?php echo $calendar['bitis']; ?></td>
-
-                                <td class="text-center w100">
-                                    <input
-                                        data-url="<?php echo base_url("dashboard/isActiveSetter/$item->id"); ?>"
-                                        class="isActive"
-                                        type="checkbox"
-                                        data-switchery
-                                        data-color="#10c469"
-                                        <?php echo ($item->isActive) ? "checked" : ""; ?>
-                                    />
-                                </td>
                                 <td class="text-center w200">
                                     <button
                                         data-url="<?php echo base_url("dashboard/deleted/$item->id"); ?>"

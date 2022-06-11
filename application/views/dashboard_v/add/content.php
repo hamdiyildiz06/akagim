@@ -20,17 +20,48 @@
                         </div>
                     </div>
 
-                    <div class="form-group col-md-12">
-                        <label for="control-demo-6">Menti</label>
-                        <div id="control-demo-6">
-                            <select name="student_id" id="student_id" class="form-control">
-                                <option value="0">Seçim Yapınız</option>
-                                <?php foreach ($students as $student): ?>
-                                    <option value="<?= $student->id ?>"> <?= $student->full_name ?> </option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group tyeri col-md-12">
+                                <label for="control-demo-6">Menti Veya Girisim</label>
+                                <div id="control-demo-6">
+                                    <select name="mentiGirisim" id="mentiGirisim" class="form-control mentiGirisim">
+                                        <option value="0">Seçim Yapınız</option>
+                                        <option value="menti">Menti</option>
+                                        <option value="girisim">Girisim</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-12 menti" style="display: none">
+                                <label for="control-demo-6">Menti</label>
+                                <div id="control-demo-6">
+                                    <select name="student_id" id="student_id" class="form-control mentiVal">
+                                        <option value="0">Seçim Yapınız</option>
+                                        <?php foreach ($students as $student): ?>
+                                            <option value="<?= $student->id ?>"> <?= $student->full_name ?> </option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-12 girisim" style="display: none">
+                                <label for="control-demo-6">Girisim</label>
+                                <div id="control-demo-6">
+                                    <select name="girisim_category_id" id="girisim_category_id" class="form-control girisimVal">
+                                        <option value="0">Seçim Yapınız</option>
+                                        <?php foreach ($girisim_categorys as $girisim_category): ?>
+                                            <option value="<?= $girisim_category->id ?>"> <?= $girisim_category->title ?> </option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                            </div>
+
+
+                        </div><!-- END column -->
                     </div>
+
 
                     <div class="form-group">
                         <label>Başlık</label>
@@ -104,6 +135,9 @@
 <script>
     $(document).ready(function() {
 
+        $('.menti').css("display", "none");
+        $('.girisim').css("display", "none");
+
         if ($('.toplanti').val() == "zoom") {
             $('.location').css("display", "none");
         }
@@ -118,6 +152,16 @@
                 $('.location').css("display", "none");
             }
         });
+
+        $('.mentiGirisim').on('change', function(){
+            if (this.value == "menti" ){
+                $('.menti').css("display", "block");
+                $('.girisim').css("display", "none");
+            } else {
+                $('.menti').css("display", "none");
+                $('.girisim').css("display", "block");
+            }
+        })
 
         $('.hamdi').timepicker({
             timeFormat: 'HH:mm',

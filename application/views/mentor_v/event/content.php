@@ -131,24 +131,31 @@
                                                     </div>
                                                 <?php endif; ?>
                                             </div>
+
+
                                             <div class="media">
                                                 <div class="media-left text-center col-md-6" style="float: left; padding: 0 0 20px 20px">
+
                                                     <h5 class="media-heading"><a href="javascript:void(0)" class="title-color"><?=  $calendar['tarih']; ?></a></h5>
                                                     <p> <?=  $calendar['baslangic']; ?> - <?=  $calendar['bitis']; ?> </p>
                                                     <small class="media-meta"> <?= ($available->toplantiTuru == "zoom") ? "zoom" : "Akagim" ; ?> </small>
                                                     <div class="media-body text-center" style="padding-top: 10px;">
                                                         <div class="text-center">
+
                                                             <form action="<?= base_url("mentor/rezerv/{$event->id}") ?>" method="post">
+
                                                                 <?php if ($event->isActive == '0'): ?>
-                                                                    <a href="<?= base_url("mentor/rezerv/{$event->id}") ?>" type="submit" class="btn rounded btn-success"> REZERV ET</a>
-                                                                <p><small style="margin-top: 10px; display: block; color: red">Randevu işlemini tamamlamak için rezerv et Butonunu tıklayınız</small></p>
+                                                                    <!--<a href="<?= base_url("mentor/rezerv/{$event->id}") ?>" type="button"  class="btn rounded btn-success"> REZERV ET</a>-->
+                                                                    <a href="<?= base_url("mentor/rezerv/{$event->id}"); ?>" type="submit"  class="btn rounded btn-success"> REZERV ET</a>
+
+                                                                    <p><small style="margin-top: 10px; display: block; color: red">Randevu işlemini tamamlamak için rezerv et Butonunu tıklayınız</small></p>
                                                                 <?php elseif($event->isActive == '1'): ?>
 
                                                                         <a href="javascript:void(0);" type="button" class="btn rounded mw-md btn-info">ONAY BEKLEMEDE</a>
 
                                                                         <?php if ((($event->isActive == '1') && ($event->teacher_id == get_active_user()->id)) || ( get_active_user()->user_role_id == 1) && ($event->isActive == '1') ): ?>
-                                                                            <a href="<?= base_url("mentor/rezerv/{$event->id}/2") ?>" type="submit" class="btn rounded btn-success"> ONAYLA </a>
-                                                                            <a href="<?= base_url("mentor/rezerv/{$event->id}/4") ?>" type="submit" class="btn rounded btn-danger"> İPTAL </a>
+                                                                            <a href="<?= base_url("mentor/rezerv/{$event->id}/2") ?>"  class="btn rounded btn-success"> ONAYLA </a>
+                                                                            <a href="<?= base_url("mentor/rezerv/{$event->id}/4") ?>"  class="btn rounded btn-danger"> İPTAL </a>
                                                                         <?php endif; ?>
 
                                                                 <?php elseif($event->isActive == '3'): ?>
@@ -163,8 +170,8 @@
 
                                                                         <a href="javascript:void(0);" type="button" class="btn rounded mw-md btn-info">ONAYLANDI</a>
                                                                         <?php if ((($event->isActive == '2') && ($event->teacher_id == get_active_user()->id)) || ( get_active_user()->user_role_id == 1) && ($event->isActive == '2') ): ?>
-                                                                            <a href="<?= base_url("mentor/rezerv/{$event->id}/3") ?>" type="submit" class="btn rounded btn-dark"> BİTTİ </a>
-                                                                            <a href="<?= base_url("mentor/rezerv/{$event->id}/4") ?>" type="submit" class="btn rounded btn-danger"> İPTAL </a>
+                                                                            <a href="<?= base_url("mentor/rezerv/{$event->id}/3") ?>"  class="btn rounded btn-dark"> BİTTİ </a>
+                                                                            <a href="<?= base_url("mentor/rezerv/{$event->id}/4") ?>"  class="btn rounded btn-danger"> İPTAL </a>
                                                                         <?php endif; ?>
 
                                                                 <?php endif; ?>

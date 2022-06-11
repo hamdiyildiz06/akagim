@@ -108,8 +108,8 @@ class Users extends HY_Controller
         $this->form_validation->set_rules("user_role_id", ",Kullanıcı Rolü", "required|trim");
         $this->form_validation->set_rules("girisim_category_id", ",Girişim Categori", "required|trim");
         $this->form_validation->set_rules("email", "E-posta", "required|trim|valid_email|is_unique[users.email]");
-        $this->form_validation->set_rules("password", "Şifre", "required|trim|min_length[6]|max_length[8]");
-        $this->form_validation->set_rules("re_password", "Şifre Tekrar", "required|trim|min_length[4]|max_length[8]|matches[password]");
+        $this->form_validation->set_rules("password", "Şifre", "required|trim|min_length[4]");
+        $this->form_validation->set_rules("re_password", "Şifre Tekrar", "required|trim|min_length[4]|matches[password]");
 
         $this->form_validation->set_message(
             array(
@@ -118,7 +118,6 @@ class Users extends HY_Controller
                 "is_unique"   => "<b>{field}</b> alanı daha önceden kullanılmış",
                 "matches"     => "Şifreler birbirlerini tutmuyor",
                 "min_length"  => "<b>{field}</b> 4 karakterden az olamaz",
-                "max_length"  => "<b>{field}</b> 8 karakterden fazla olamaz",
             )
         );
 
@@ -610,8 +609,8 @@ class Users extends HY_Controller
 
         $this->load->library("form_validation");
 
-        $this->form_validation->set_rules("password", "Şifre", "required|trim|min_length[6]|max_length[8]");
-        $this->form_validation->set_rules("re_password", "Şifre Tekrar", "required|trim|min_length[6]|max_length[8]|matches[password]");
+        $this->form_validation->set_rules("password", "Şifre", "required|trim|min_length[4]");
+        $this->form_validation->set_rules("re_password", "Şifre Tekrar", "required|trim|min_length[4]|matches[password]");
 
         $this->form_validation->set_message(
             array(

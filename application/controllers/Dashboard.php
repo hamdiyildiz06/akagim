@@ -170,6 +170,7 @@ class Dashboard extends HY_Controller {
         $viewData = new stdClass();
 
         $user = $this->user = get_active_user();
+        $this->load->model('girisim_category_model');
 
 
         if ($user->user_role_id != 1){
@@ -188,7 +189,7 @@ class Dashboard extends HY_Controller {
         $viewData->teachers = $this->user_model->get_all(
             array(
                 "isActive"     =>  1,
-                "user_role_id" =>  2
+                "user_role_id !=" =>  3
             )
         );
 
@@ -198,6 +199,14 @@ class Dashboard extends HY_Controller {
                 "user_role_id" =>  3
             )
         );
+
+        $viewData->girisim_categorys = $this->girisim_category_model->get_all(
+            array(
+                "isActive"     =>  1
+            )
+        );
+
+
 
         /** View'e gönderilecek Değişkenlerin Set Edilmesi.. */
         $viewData->viewFolder = $this->viewFolder;
@@ -209,6 +218,7 @@ class Dashboard extends HY_Controller {
     }
 
     public function save(){
+        $viewData =  new stdClass();
         $user = get_active_user();
 
         if ($user->user_role_id != 1){
@@ -249,23 +259,69 @@ class Dashboard extends HY_Controller {
 
         if($validate){
 
-            $insert = $this->fullcalendar_model->add(
-                array(
-                    "title"             => $this->input->post("title"),
-                    "teacher_id"        => $this->input->post("teacher_id"),
-                    "student_id"        => $this->input->post("student_id"),
-                    "toplantiTuru"      => $this->input->post("toplanti_turu"),
-                    "toplantiYeri"      => $this->input->post("toplanti_yeri"),
-                    "color"             => $this->input->post("listColor"),
-                    "textColor"         => $this->input->post("listTextColor"),
-                    "start_event"       => $this->input->post("event_date") . " " . $this->input->post("start_event"),
-                    "end_event"         => $this->input->post("event_date") . " " . $this->input->post("end_event"),
-                    "description"       => $this->input->post("description"),
-                    "status"            => ($this->input->post("student_id") == 0) ? '1' : '2',
-                    "isActive"          => ($this->input->post("student_id") == 0) ? '0' : '1'
+            if ($this->input->post("mentiGirisim") == "menti"  || $this->input->post("mentiGirisim") == "0"){
 
-                )
-            );
+                $insert = $this->fullcalendar_model->add(
+                    array(
+                        "title"             => $this->input->post("title"),
+                        "teacher_id"        => $this->input->post("teacher_id"),
+                        "student_id"        => $this->input->post("student_id"),
+                        "toplantiTuru"      => $this->input->post("toplanti_turu"),
+                        "toplantiYeri"      => $this->input->post("toplanti_yeri"),
+                        "color"             => $this->input->post("listColor"),
+                        "textColor"         => $this->input->post("listTextColor"),
+                        "start_event"       => $this->input->post("event_date") . " " . $this->input->post("start_event"),
+                        "end_event"         => $this->input->post("event_date") . " " . $this->input->post("end_event"),
+                        "description"       => $this->input->post("description"),
+                            "status"            => ($this->input->post("student_id") == 0) ? '1' : '2',
+                            "isActive"          => ($this->input->post("student_id") == 0) ? '0' : '1'
+                    )
+                );
+
+            } elseif ($this->input->post("mentiGirisim") == "girisim"){
+
+                $itemUsers = $this->user_model->get_all(
+                    array(
+                        "isActive"    => 1,
+                        "girisim_category_id" => $this->input->post("girisim_category_id")
+                    )
+                );
+
+//echo "girisim kısmındayız dostum <br>";
+//echo  $this->input->post("girisim_category_id") . "<br>";
+//echo  $this->input->post("mentiGirisim") . "<br>";
+//
+//print_r($itemUsers);
+//die();
+
+
+                foreach ($itemUsers as $itemUser){
+
+//                    print_r($itemUser);
+//                    die();
+                    $insert = $this->fullcalendar_model->add(
+                        array(
+                            "title"             => $this->input->post("title"),
+                            "teacher_id"        => $this->input->post("teacher_id"),
+                            "student_id"        => $itemUser->id,
+                            "toplantiTuru"      => $this->input->post("toplanti_turu"),
+                            "toplantiYeri"      => $this->input->post("toplanti_yeri"),
+                            "color"             => $this->input->post("listColor"),
+                            "textColor"         => $this->input->post("listTextColor"),
+                            "start_event"       => $this->input->post("event_date") . " " . $this->input->post("start_event"),
+                            "end_event"         => $this->input->post("event_date") . " " . $this->input->post("end_event"),
+                            "description"       => $this->input->post("description"),
+//                            "status"            => ($this->input->post("student_id") == 0) ? '1' : '2',
+//                            "isActive"          => ($this->input->post("student_id") == 0) ? '0' : '1'
+                            "status"            => ($this->input->post("student_id") == 0) ? '2' : '2',
+                            "isActive"          => ($this->input->post("student_id") == 0) ? '2' : '1'
+                        )
+                    );
+                }
+
+            }
+
+
 
             // TODO Alert sistemi eklenecek...
             if($insert){

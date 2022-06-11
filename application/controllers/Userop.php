@@ -39,14 +39,14 @@ class Userop extends HY_Controller {
 
         // Kurallar yazilir..
         $this->form_validation->set_rules("user_email", "E-posta", "required|trim|valid_email");
-        $this->form_validation->set_rules("user_password", "Şifre", "required|trim|min_length[6]|max_length[8]");
+        $this->form_validation->set_rules("user_password", "Şifre", "required|trim|min_length[4]");
 
         $this->form_validation->set_message(
             array(
                 "required"    => "<b>{field}</b> alanı doldurulmalıdır",
                 "valid_email" => "Lütfen geçerli bir e-posta adresi giriniz",
-                "min_length"  => "<b>{field}</b> en az 6 karakterden oluşmalıdır",
-                "max_length"  => "<b>{field}</b> en fazla 8 karakterden oluşmalıdır",
+                "min_length"  => "<b>{field}</b> en az 4 karakterden oluşmalıdır",
+
             )
         );
 

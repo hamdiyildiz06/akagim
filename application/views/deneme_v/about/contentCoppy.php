@@ -104,7 +104,7 @@
                                                     <?php endif; ?>
                                                 </div>
                                                 <div class="media">
-                                                    <div class="media-left text-center col-md-6" style="padding: 0 0 20px 20px">
+                                                    <div class="media-left text-center col-md-6" style="float: left; padding: 0 0 20px 20px">
                                                         <h5 class="media-heading"><a href="javascript:void(0)" class="title-color"><?=  $calendar['tarih']; ?></a></h5>
                                                         <p> <?=  $calendar['baslangic']; ?> - <?=  $calendar['bitis']; ?> </p>
                                                         <small class="media-meta"><?= ($available->toplantiTuru == "zoom") ? "zoom" : "Akagim" ; ?> </small>
@@ -171,7 +171,7 @@
 
                                                 </div>
                                                 <div class="media">
-                                                    <div class="media-left text-center col-md-6" style="padding: 0 0 20px 20px">
+                                                    <div class="media-left text-center col-md-6" style="float: left; padding: 0 0 20px 20px">
                                                         <h5 class="media-heading"><a href="javascript:void(0)" class="title-color"><?=  $calendar['tarih']; ?></a></h5>
                                                         <p> <?=  $calendar['baslangic']; ?> - <?=  $calendar['bitis']; ?> </p>
                                                         <small class="media-meta"> <?= ($available->toplantiTuru == "zoom") ? "zoom" : "Akagim" ; ?> </small>
@@ -242,7 +242,7 @@
                                                         <?php endif; ?>
                                                     </div>
                                                     <div class="media">
-                                                        <div class="media-left text-center" style="padding: 0 0 20px 20px">
+                                                        <div class="media-left text-center" style="float: left; padding: 0 0 20px 20px">
                                                             <h5 class="media-heading"><a href="javascript:void(0)" class="title-color"><?=  $calendar['tarih']; ?></a></h5>
                                                             <p> <?=  $calendar['baslangic'];  ?> - <?=  $calendar['bitis'];  ?> </p>
                                                             <small class="media-meta"> <?= ($available->toplantiTuru == "zoom") ? "zoom" : "Akagim" ; ?> </small>
@@ -276,7 +276,7 @@
 
                                                     </div>
                                                     <div class="media">
-                                                        <div class="media-left text-center col-md-6" style="padding: 0 0 20px 20px">
+                                                        <div class="media-left text-center col-md-6" style="float: left; padding: 0 0 20px 20px">
                                                             <h5 class="media-heading"><a href="javascript:void(0)" class="title-color"><?=  $calendar['tarih']; ?></a></h5>
                                                             <p> <?=  $calendar['baslangic']; ?> - <?=  $calendar['bitis']; ?> </p>
                                                             <small class="media-meta"> <?= ($available->toplantiTuru == "zoom") ? "zoom" : "Akagim" ; ?> </small>
