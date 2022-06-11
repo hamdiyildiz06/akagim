@@ -339,4 +339,43 @@ function get_user_roles_title($id){
     return $user_roles->title;
 }
 
+function get_meeting_status($status, $isActive){
+
+    if ($status ==  "1" && $isActive == "0"){
+        $value = "Müsait";
+    } elseif ($status ==  "2" && $isActive == "1"){
+        $value = "Rezerv";
+    } elseif ($status ==  "2" && $isActive == "2"){
+        $value = "Onaylandı";
+    } elseif ($status ==  "3" && $isActive == "3"){
+        $value = "Bitti";
+    } elseif ($status ==  "4" && $isActive == "4"){
+        $value = "İptal";
+    } else{
+        $value = "bilinmiyor";
+    }
+
+    /*
+        şuanda bu şekilde
+
+             müsait                   = status "1" , isActive 0
+             toplantılarım->rezerv    = status "2" , isActive 1
+             Toplantılarım            = status "2" , isActive 2
+             Bitti                    = status "3" , isActive 3
+             iptal                    = status "4" , isActive 4
+    */
+    /*
+        Dünzenlemeden sonra bu şekilde olacak
+
+             müsait                   = status "1",
+             toplantılarım->rezerv    = status "2",
+             Toplantılarım            = status "3",
+             Bitti                    = status "4",
+             iptal                    = status "5",
+    */
+
+    return $value;
+
+}
+
 

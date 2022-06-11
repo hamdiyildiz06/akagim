@@ -499,18 +499,20 @@ class Dashboard extends HY_Controller {
         $myExcell->getActiveSheet()->setCellValue("D1","Tarih");
         $myExcell->getActiveSheet()->setCellValue("E1","başlangıç");
         $myExcell->getActiveSheet()->setCellValue("F1","Bitiş");
+        $myExcell->getActiveSheet()->setCellValue("G1","Durum");
         $myExcell->getActiveSheet()->getColumnDimension("A")->setAutoSize(true);
         $myExcell->getActiveSheet()->getColumnDimension("B")->setAutoSize(true);
         $myExcell->getActiveSheet()->getColumnDimension("C")->setAutoSize(true);
         $myExcell->getActiveSheet()->getColumnDimension("D")->setAutoSize(true);
         $myExcell->getActiveSheet()->getColumnDimension("E")->setAutoSize(true);
         $myExcell->getActiveSheet()->getColumnDimension("F")->setAutoSize(true);
+        $myExcell->getActiveSheet()->getColumnDimension("G")->setAutoSize(true);
         $myExcell->getActiveSheet()->getRowDimension("1")->setRowHeight(22);
-        $myExcell->getActiveSheet()->getStyle("A1:F1")
+        $myExcell->getActiveSheet()->getStyle("A1:G1")
             ->getFill()
             ->setFillType(PHPExcel_Style_Fill::FILL_SOLID)
             ->getStartColor()->setRGB("E5AB9E");
-        $myExcell->getActiveSheet()->getStyle("A1:F1")->getFont()->setBold(true);
+        $myExcell->getActiveSheet()->getStyle("A1:G1")->getFont()->setBold(true);
         $borderStyle = array(
             'borders' => array(
                 'allborders' => array(
@@ -518,8 +520,8 @@ class Dashboard extends HY_Controller {
                 )
             )
         );
-        $myExcell->getActiveSheet()->getStyle("A1:F1")->getFont()->setSize(13);
-        $myExcell->getActiveSheet()->getStyle("A1:F1")->applyFromArray($borderStyle);
+        $myExcell->getActiveSheet()->getStyle("A1:G1")->getFont()->setSize(13);
+        $myExcell->getActiveSheet()->getStyle("A1:G1")->applyFromArray($borderStyle);
 
 
 
@@ -527,14 +529,15 @@ class Dashboard extends HY_Controller {
         foreach ($items as $item):
             $calendar = get_watch_list($item->start_event, $item->end_event);
             $myExcell->getActiveSheet()->getRowDimension($i)->setRowHeight(20);
-            $myExcell->getActiveSheet()->getStyle("A$i:F$i")->applyFromArray($borderStyle);
-            $myExcell->getActiveSheet()->getStyle("A$i:F$i")->getFont()->setSize(11);
+            $myExcell->getActiveSheet()->getStyle("A$i:G$i")->applyFromArray($borderStyle);
+            $myExcell->getActiveSheet()->getStyle("A$i:G$i")->getFont()->setSize(11);
             $myExcell->getActiveSheet()->setCellValue("A".$i,$item->id);
             $myExcell->getActiveSheet()->setCellValue("B".$i,get_user_info($item->teacher_id)->full_name);
             $myExcell->getActiveSheet()->setCellValue("C".$i,get_user_info($item->student_id)->full_name);
             $myExcell->getActiveSheet()->setCellValue("D".$i,$calendar['tarih']);
             $myExcell->getActiveSheet()->setCellValue("E".$i,$calendar['baslangic']);
             $myExcell->getActiveSheet()->setCellValue("F".$i,$calendar['bitis']);
+            $myExcell->getActiveSheet()->setCellValue("G".$i,get_meeting_status($item->status, $item->isActive));
             $i++;
         endforeach;
 

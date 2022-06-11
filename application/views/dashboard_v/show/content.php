@@ -72,6 +72,7 @@
                         <th>Tarih</th>
                         <th>başlangıç</th>
                         <th>Bitiş</th>
+                        <th>Durum</th>
                         <th>İşlem</th>
                     </thead>
                     <tbody>
@@ -85,6 +86,7 @@
                                 <td><?php echo $calendar['tarih']; ?></td>
                                 <td><?php echo $calendar['baslangic']; ?></td>
                                 <td><?php echo $calendar['bitis']; ?></td>
+                                <td><?php echo get_meeting_status($item->status, $item->isActive); ?></td>
                                 <td class="text-center w200">
                                     <button
                                         data-url="<?php echo base_url("dashboard/deleted/$item->id"); ?>"
