@@ -74,6 +74,7 @@
                                 <?php  endforeach; ?>
                             </div><!-- .row -->
                         </div><!-- müsait -->
+
                         <?php if( get_active_user()->user_role_id != 3): ?>
                             <div role="tabpanel" id="profile-my_meetings" class="tab-pane fade p-md">
                                 <div class="row">

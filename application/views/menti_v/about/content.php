@@ -54,13 +54,13 @@
                                     </div>
                                 </div>
                                 <div class="media">
-                                    <div class="media-left text-center" style="padding: 0 0 20px 20px">
+                                    <div class="media-left text-center" style="float: left; padding: 0 0 20px 20px">
                                         <h5 class="media-heading"><a href="javascript:void(0)" class="title-color"><?=  $calendar['tarih']; ?></a></h5>
                                         <p> <?=  $calendar['baslangic'];  ?> - <?=  $calendar['bitis'];  ?> </p>
                                         <small class="media-meta"> <?= $available->toplantiTuru; ?> </small>
                                     </div>
 
-                                    <div class="media-right text-center" style="padding: 20px 20px 20px 0">
+                                    <div class="media-right text-center" style="float: right; padding: 20px 20px 20px 0">
                                          <a  href="<?= base_url("mentor/event/{$available->id}") ?>" type="button" class="btn rounded mw-md btn-warning">RANDEVU AL</a>
                                     </div>
                                 </div>
