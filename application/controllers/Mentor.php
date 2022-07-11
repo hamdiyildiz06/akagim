@@ -639,9 +639,6 @@ class Mentor extends HY_Controller
         );
 
 
-
-
-
         if ($viewData->event->status == 1){
 
             $viewData->mentor = $this->user_model->get(
@@ -773,15 +770,30 @@ class Mentor extends HY_Controller
 
     public function rezerv($id,$di = ""){
         $viewData = new stdClass();
+
         $user = get_active_user();
 
         $this->load->model('fullcalendar_model');
+        $this->load->model('user_model');
 
         $rezerv = $this->fullcalendar_model->get(
             array(
                 "id" => $id,
             )
         );
+
+        // teacher bilgilerini aldık
+        $teacher = $this->user_model->get([
+            "id" => $rezerv->teacher_id
+        ]);
+
+        // student bilgilerini aldık
+
+
+
+
+//        print_r($user);
+//        die();
 
 
         if ($rezerv->status === '1'){
@@ -805,7 +817,15 @@ class Mentor extends HY_Controller
                 "isActive"  => $isActive
             );
 
-        }elseif ($rezerv->status === '2'){
+            $mesaj_data = [
+                "toEmail" => $user->email,
+                "subject" => "Akagim Meeting İşlemleri Bilgilendirme",
+                "message_student" =>  "Mentor { $teacher->full_name } ile yapacağınız Toplantı için rezerv işleminiz başarıyla tamamlandı <br> Lütfen onaylanmasını bekleyelim",
+                "message_teacher" => "Menti { $user->full_name } Bir Toplantı Rezerv etti ve onayınızı bekliyor..",
+            ];
+
+        }
+        elseif ($rezerv->status === '2'){
 
             $isActive = $di;
             // menti iptal edemeyecek
@@ -826,24 +846,48 @@ class Mentor extends HY_Controller
                     "status"  => '2',
                     "isActive"  => '2'
                 );
+                $mesaj_data = [
+                    "toEmail" => $user->email,
+                    "subject" => "Akagim Meeting İşlemleri Bilgilendirme",
+                    "message_student" =>  "Mentor {$teacher->full_name} Rezerv Ettiğiniz Toplantıyı Onayladı Lütfen Kontrol Ediniz",
+                    "message_teacher" => "Menti {$user->full_name} Daha önce Rezerv Ettiği Toplantıyı Baraşıyla Onayladınız",
+                ];
             }elseif($di == 3){
                 $data =   array(
                     "status"  => '3',
                     "isActive"  => '3'
                 );
+                $mesaj_data = [
+                    "toEmail" => $user->email,
+                    "subject" => "Akagim Meeting İşlemleri Bilgilendirme",
+                    "message_student" =>  "Mentor {$teacher->full_name} ile Gerçekteştirdiğiniz Toplantı Sona Erdi",
+                    "message_teacher" => "Menti {$user->full_name} ile Gerçekteştirdiğiniz Toplantı Sona Erdi",
+                ];
             }elseif ($di == 4){
                 $data =   array(
                     "status"  => '4',
                     "isActive"  => '4'
                 );
+                $mesaj_data = [
+                    "toEmail" => $user->email,
+                    "subject" => "Akagim Meeting İşlemleri Bilgilendirme",
+                    "message_student" =>  "Mentor {$teacher->full_name} ile Yapacağınız Toplantı İptal Edildi",
+                    "message_teacher" => "Menti {$user->full_name} ile Yapacağınız Toplantıyı İptal Ettiniz",
+                ];
             }
-
         }
 
         $update = $this->fullcalendar_model->update(array("id" => $id), $data);
 
 
         if($update){
+
+//            send_email($mesaj_data["toEmail"],$mesaj_data["subject"],$mesaj_data["message"]);
+//            send_email($teacher->email,$mesaj_data["subject"],$mesaj_data["message"]);
+
+
+            send_email("hamdiyildiz06@gmail.com",$mesaj_data["subject"],$mesaj_data["message_student"]);
+            send_email("hamdiyildiz06@gmail.com",$mesaj_data["subject"],$mesaj_data["message_teacher"]);
 
             $alert = array(
                 "title" => "İşlem Başarılı",
