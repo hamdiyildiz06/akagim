@@ -820,8 +820,8 @@ class Mentor extends HY_Controller
             $mesaj_data = [
                 "toEmail" => $user->email,
                 "subject" => "Akagim Meeting İşlemleri Bilgilendirme",
-                "message_student" =>  "Mentor { $teacher->full_name } ile yapacağınız Toplantı için rezerv işleminiz başarıyla tamamlandı <br> Lütfen onaylanmasını bekleyelim",
-                "message_teacher" => "Menti { $user->full_name } Bir Toplantı Rezerv etti ve onayınızı bekliyor..",
+                "message_student" => "Merhaba; Toplantıyı rezerv isteğiniz Mentör’ümüze iletildi. Onaylanması durumunda sizlere bilgi veriyor olacağız. Teşekkür ederiz.",
+                "message_teacher" => "Merhaba; müsait toplantınız Menti’miz tarafından rezerve edildi. Toplantıyı onaylamak için lütfen tıklayınız.",
             ];
 
         }
@@ -849,8 +849,8 @@ class Mentor extends HY_Controller
                 $mesaj_data = [
                     "toEmail" => $user->email,
                     "subject" => "Akagim Meeting İşlemleri Bilgilendirme",
-                    "message_student" =>  "Mentor {$teacher->full_name} Rezerv Ettiğiniz Toplantıyı Onayladı Lütfen Kontrol Ediniz",
-                    "message_teacher" => "Menti {$user->full_name} Daha önce Rezerv Ettiği Toplantıyı Baraşıyla Onayladınız",
+                    "message_student" => "Merhaba; Mentör’ümüz tarafından toplantınız onaylandı. Toplantı saatinde portalımız üzerinden kullanıcı adı ve şifresini girerek görüşme sağlayabilirsiniz. Teşekkür ederiz.",
+                    "message_teacher" => "Merhaba; Toplantı onayınız Menti’ye iletildi. Toplantı saatinde portalımız üzerinden kullanıcı adı ve şifresini girerek görüşme sağlayabilirsiniz. Teşekkür ederiz.",
                 ];
             }elseif($di == 3){
                 $data =   array(
@@ -860,8 +860,8 @@ class Mentor extends HY_Controller
                 $mesaj_data = [
                     "toEmail" => $user->email,
                     "subject" => "Akagim Meeting İşlemleri Bilgilendirme",
-                    "message_student" =>  "Mentor {$teacher->full_name} ile Gerçekteştirdiğiniz Toplantı Sona Erdi",
-                    "message_teacher" => "Menti {$user->full_name} ile Gerçekteştirdiğiniz Toplantı Sona Erdi",
+                    "message_student" =>  "Toplantıya katıldığınız için teşekkür ederiz.",
+                    "message_teacher" => "Toplantıya katıldığınız için teşekkür ederiz. ",
                 ];
             }elseif ($di == 4){
                 $data =   array(
@@ -871,8 +871,8 @@ class Mentor extends HY_Controller
                 $mesaj_data = [
                     "toEmail" => $user->email,
                     "subject" => "Akagim Meeting İşlemleri Bilgilendirme",
-                    "message_student" =>  "Mentor {$teacher->full_name} ile Yapacağınız Toplantı İptal Edildi",
-                    "message_teacher" => "Menti {$user->full_name} ile Yapacağınız Toplantıyı İptal Ettiniz",
+                    "message_student" =>  "Toplantınız iptal edilmiştir. Mentörlerimizin müsaitlik durumuna göre tekrardan portalımıza girip randevu oluşturabilirsiniz, Teşekkür ederiz.",
+                    "message_teacher" => "Toplantınız Başarıyla iptal edilmiştir. Müsaitlik durumunuza göre tekrar toplantı oluşturabilirsiniz. Teşekkür ederiz.",
                 ];
             }
         }
